@@ -1,0 +1,984 @@
+/* === Reset & base === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  margin: 0;
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  background:
+    radial-gradient(1100px 650px at 20% 0%, rgba(236, 72, 153, 0.22), transparent 60%),
+    radial-gradient(900px 600px at 80% 15%, rgba(139, 92, 246, 0.20), transparent 55%),
+    #050014;
+  color: #e4e4e7;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.page-map {
+  background: #000000;
+}
+
+/* === App layout === */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.btn-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(39, 39, 42, 0.9);
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.btn-icon:hover {
+  background: rgba(63, 63, 70, 0.95);
+}
+
+/* === YouTube player overlay === */
+.player-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.86);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 40;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease-out;
+}
+
+.player-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.player-dialog {
+  position: relative;
+  width: min(960px, 100% - 2.5rem);
+  max-height: 90vh;
+  padding-top: 3rem; /* ruimte voor sluitknop boven de player */
+}
+
+.player-close {
+  position: absolute;
+  right: 0;
+  top: 0.25rem;
+  z-index: 2;
+  transform: translateY(-100%); /* plaats knop net buiten de video */
+}
+
+.player-aspect {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.75);
+}
+
+.player-aspect iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.player-title {
+  margin: 0.9rem 0 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #f9fafb;
+  text-align: left;
+}
+
+/* === Main layout === */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding-top: 3.5rem;
+}
+
+.main--stream {
+  padding-top: 0;
+}
+
+/* === Topbalk streampagina (Vlogs | Map) === */
+.topbar-stream {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 25;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 4%;
+  padding-top: max(1rem, env(safe-area-inset-top));
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent);
+}
+
+.topbar-nav {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.topbar-logo {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 0.75rem;
+}
+
+.topbar-logo img {
+  height: 42px;
+  width: auto;
+  display: block;
+}
+
+.topbar-link {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+}
+
+.topbar-link:hover {
+  color: #fff;
+}
+
+.topbar-link.is-active {
+  color: #fff;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.topbar-icon {
+  background: transparent;
+  color: #fff;
+}
+
+.topbar-icon:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.topbar-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #ec4899, #8b5cf6);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+/* === Stream hero (meest recente vlog) === */
+.stream-hero {
+  position: relative;
+  width: 100%;
+  min-height: 55vh;
+  max-height: 75vh;
+  display: flex;
+  align-items: flex-end;
+  overflow: visible; /* laat hover-kaarten van Top 10 boven de rij uitsteken */
+}
+
+.stream-hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-color: #0f172a;
+}
+
+.stream-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.4) 45%, transparent 70%);
+}
+
+.stream-hero-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 56rem;
+  padding: 2.5rem 4% 2rem;
+}
+
+.stream-hero-title {
+  margin: 0 0 0.4em;
+  font-size: clamp(3.5rem, 8vw, 6rem);
+  font-weight: 700;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+}
+
+.stream-hero-meta {
+  margin: 0 0 1.5rem;
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.stream-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.btn-stream-play {
+  padding: 1rem 2.5rem;
+  border-radius: 0.4rem;
+  border: none;
+  background: rgba(124, 58, 237, 0.95);
+  color: #fff;
+  font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-stream-play:hover {
+  background: rgba(139, 92, 246, 0.95);
+}
+
+.btn-stream-add {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  background: rgba(0, 0, 0, 0.4);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.btn-stream-add:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* === Rijen (Mijn lijst + categorieën) === */
+.stream-mylist,
+.stream-row {
+  padding: 1.75rem 4% 3rem; /* extra ruimte boven/onder voor groeiende hover-cards */
+}
+
+.stream-mylist-title,
+.stream-row-title {
+  margin: 0 0 0.6rem;
+  font-size: clamp(1.4rem, 2.2vw, 1.85rem);
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: 0.02em;
+}
+
+.stream-mylist-scroller,
+.stream-row-scroller {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  overflow-y: visible; 
+  padding: 0.8rem;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.stream-mylist-scroller::-webkit-scrollbar,
+.stream-row-scroller::-webkit-scrollbar {
+  display: none;
+}
+
+/* Kaarten (Mijn lijst + categorieën) */
+.mylist-poster,
+.stream-row-poster {
+  flex: 0 0 300px;
+  width: 300px;
+  border-radius: 0.25rem;
+  overflow: visible;
+  background: transparent;
+  padding: 0;
+  box-shadow: none;
+  cursor: pointer;
+  scroll-snap-align: start;
+  transition: transform 0.2s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  outline: none;
+}
+
+.mylist-poster:hover,
+.stream-row-poster:hover {
+  transform: scale(1.03);
+  z-index: 10;
+}
+
+.vlog-thumb {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 0.8rem;
+  overflow: hidden;
+  background-color: #1e293b;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.55), 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+.mylist-poster:hover .vlog-thumb,
+.stream-row-poster:hover .vlog-thumb {
+  /* iets lichtere, roze/paarse shadow bij hover */
+  box-shadow:
+    0 14px 34px rgba(76, 29, 149, 0.9),
+    0 0 0 1px rgba(236, 72, 153, 0.8);
+}
+
+.vlog-hover-card {
+  /* Popup-overlay uitgeschakeld; styles behouden voor eventueel later gebruik */
+  display: none;
+}
+
+.vlog-hover-thumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background-size: cover;
+  background-position: center;
+  background-color: #1e293b;
+  position: relative;
+}
+
+.vlog-hover-panel {
+  position: relative;
+  padding: 0.75rem 0.85rem 0.85rem;
+}
+
+.vlog-hover-actions {
+  position: absolute;
+  top: 0.65rem;
+  right: 0.75rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin: 0;
+}
+
+.vlog-hover-meta {
+  display: flex;
+  gap: 0.9rem;
+  align-items: center;
+  margin: 0 0 0.25rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.82rem;
+  padding-right: 0;
+}
+
+.vlog-hover-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 500;
+}
+
+.vlog-hover-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.25;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.vlog-meta {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0 0.1rem;
+  min-height: 70px;
+}
+
+.vlog-meta-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.vlog-duration {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.vlog-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.vlog-year {
+  margin-top: auto;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.6);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.vlog-year-icon {
+  width: 14px;
+  height: 14px;
+  stroke-width: 2;
+  color: rgba(255, 255, 255, 0.6);
+  flex-shrink: 0;
+}
+
+.vlog-meta-play {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: #ffffff;
+  color: #000000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(4px) scale(0.85);
+  transition: opacity 0.15s ease, transform 0.15s ease, background 0.15s ease;
+}
+
+.vlog-meta-play svg {
+  width: 20px;
+  height: 20px;
+  margin-left: 2px;
+}
+
+.mylist-poster:hover .vlog-meta-play,
+.stream-row-poster:hover .vlog-meta-play {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.vlog-meta-play:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.mylist-poster:hover .vlog-hover-title,
+.stream-row-poster:hover .vlog-hover-title {
+  color: #ffffff;
+  font-weight: 800; /* titel duidelijk vetter bij hover */
+}
+
+.poster-hover-play,
+.poster-hover-info {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: #fff;
+  color: #000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.poster-hover-play:hover,
+.poster-hover-info:hover {
+  background: rgba(255, 255, 255, 0.9);
+  transform: scale(1.08);
+}
+
+.poster-hover-play svg {
+  width: 22px;
+  height: 22px;
+  margin-left: 3px;
+}
+
+.poster-hover-info svg {
+  width: 20px;
+  height: 20px;
+}
+
+.poster-hover-icon {
+  width: 14px;
+  height: 14px;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+
+/* Informatie modal */
+.info-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.info-modal.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.info-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(4px);
+}
+
+.info-modal-content {
+  position: relative;
+  z-index: 1;
+  width: min(90vw, 600px);
+  max-height: 85vh;
+  background: #111827;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+}
+
+.info-modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.info-modal-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.info-modal-header {
+  padding: 2rem 2rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.info-modal-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.info-modal-subtitle {
+  margin: 0;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.info-modal-body {
+  padding: 1.5rem 2rem 2rem;
+  overflow-y: auto;
+}
+
+.info-modal-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.info-modal-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.info-modal-icon {
+  width: 20px;
+  height: 20px;
+  stroke-width: 2;
+  color: rgba(255, 255, 255, 0.6);
+  flex-shrink: 0;
+}
+
+.info-modal-meta-label {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  min-width: 60px;
+}
+
+.info-modal-meta-value {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #fff;
+  margin-left: auto;
+}
+
+.info-modal-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.info-modal-play-btn {
+  flex: 1;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.4rem;
+  border: none;
+  background: #fff;
+  color: #000;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: background 0.2s ease;
+}
+
+.info-modal-play-btn:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.mylist-empty {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* === Categorierijen (Shorts, Series, Documentaries, Events) === */
+
+/* (oude overlay-titels niet meer in gebruik) */
+
+.stream-row-empty {
+  color: #9ca3af;
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+/* === Top 10: portret-thumbnails met groot nummer + rode label === */
+.stream-row-scroller--top10 {
+  gap: 0.4rem;
+}
+
+/* === Wereld + vlogs per land (Map-pagina) === */
+.world-section {
+  padding: 0.5rem 1.25rem 1.5rem;
+}
+
+.world-section--full {
+  padding: 0;
+}
+
+.world-section--full .world-layout {
+  position: relative;
+  height: calc(100vh - 3.5rem);
+}
+
+.world-section--full .world-section-header {
+  position: absolute;
+  z-index: 5;
+  top: 1rem;
+  left: 1.25rem;
+  right: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .world-section--full .world-section-header {
+    right: calc(400px + 1.5rem + 1.25rem);
+  }
+}
+
+.world-section--full #globe-container {
+  height: 100%;
+  border-radius: 0;
+}
+
+.world-section-header {
+  margin-bottom: 0.75rem;
+}
+
+.section-title {
+  margin: 0 0 0.25rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.section-subtitle {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #9ca3af;
+}
+
+.world-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Desktop: globe links, dashboard rechts */
+@media (min-width: 768px) {
+  .world-section--full .world-layout {
+    flex-direction: row;
+    gap: 1.5rem;
+    align-items: stretch;
+  }
+
+  .world-section--full #globe-container {
+    flex: 0 0 55%;
+    min-width: 0;
+  }
+
+  .world-section--full .world-sheet {
+    position: relative;
+    flex: 0 0 460px;
+    max-width: 480px;
+    z-index: 5;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(110%);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease-out;
+  }
+
+  .world-section--full .world-sheet.is-open {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .world-section--full .world-sheet[aria-hidden="true"] {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .world-section--full .world-sheet-handle {
+    display: none;
+  }
+
+  .world-section--full .world-sheet-inner {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-radius: 1.2rem;
+    border-top: none;
+    border-left: 1px solid rgba(31, 41, 55, 0.9);
+    box-shadow: -12px 0 40px rgba(0, 0, 0, 0.7);
+    min-height: 0;
+  }
+
+  .world-section--full .world-sheet-inner::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .world-section--full .world-sheet-inner::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+  }
+
+  .world-section--full .world-sheet-inner::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+  }
+
+  .world-section--full .world-sheet-inner::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+}
+
+#globe-container {
+  width: 100%;
+  height: 48vh;
+  min-height: 260px;
+  background: transparent; /* laat de pagina-gradient doorlopen */
+  border-radius: 0; /* geen harde rand rond de wereldbol */
+  overflow: hidden;
+}
+
+/* Mobile: dashboard vanaf onder (fixed) */
+.world-sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 35;
+  transform: translateY(110%);
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 0.55s cubic-bezier(0.22, 1.05, 0.38, 1),
+    opacity 0.4s ease-out;
+}
+
+.world-sheet.is-open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.world-sheet-inner {
+  background: #111827;
+  border-radius: 1.2rem 1.2rem 0 0;
+  padding: 0.75rem 0.9rem 1rem;
+  border-top: 1px solid rgba(31, 41, 55, 0.9);
+  box-shadow: 0 -12px 40px rgba(0, 0, 0, 0.7);
+}
+
+.world-sheet-handle {
+  width: 44px;
+  height: 5px;
+  border-radius: 9999px;
+  background: rgba(148, 163, 184, 0.7);
+  margin: 0 auto 0.35rem;
+}
+
+.world-vlogs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 0.6rem;
+}
+
+.world-vlogs-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #9ca3af;
+}
+
+.world-country-name {
+  margin: 0.1rem 0 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #f9fafb;
+}
+
+.world-country-count {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.country-vlog-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.world-empty {
+  font-size: 0.86rem;
+  color: #9ca3af;
+  margin: 0.25rem 0 0.2rem;
+}
+
+.country-vlog-card {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 0.4rem;
+  border-radius: 0.8rem;
+  background: rgba(15, 23, 42, 0.9);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+  outline: none;
+}
+
+.country-vlog-thumb {
+  width: 110px;
+  height: 62px;
+  min-width: 110px;
+  min-height: 62px;
+  border-radius: 0.55rem;
+  object-fit: cover;
+  background: radial-gradient(circle at 0 0, rgba(236, 72, 153, 0.55), transparent 55%), #050014;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+}
+
+.country-vlog-meta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.08rem;
+}
+
+.country-vlog-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #f9fafb;
+}
+
+.country-vlog-sub {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+.country-vlog-duration {
+  font-size: 0.8rem;
+  color: #e5e7eb;
+}
+
+@media (min-width: 768px) {
+  .world-section--full .world-layout {
+    height: calc(100vh - 4rem);
+  }
+}

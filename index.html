@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DaphneVlogs – Vlogs</title>
+  <link rel="icon" type="image/png" href="images/Logo DV.png">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app">
+    <!-- Topbalk: Vlogs | Map links, avatar + icoon rechts -->
+    <header class="topbar-stream">
+      <nav class="topbar-nav" aria-label="Hoofdnavigatie">
+        <a href="index.html" class="topbar-logo" aria-label="DaphneVlogs home">
+          <img src="images/Logo DV.png" alt="DaphneVlogs logo">
+        </a>
+        <a href="index.html" class="topbar-link is-active">Vlogs</a>
+        <a href="map.html" class="topbar-link">Map</a>
+      </nav>
+      <div class="topbar-right">
+        <button type="button" class="btn-icon topbar-icon" aria-label="Meldingen">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        </button>
+        <a href="index.html" class="topbar-avatar" aria-label="Profiel">DV</a>
+      </div>
+    </header>
+
+    <main class="main main--stream">
+      <!-- Hero: thumbnail van de meest recente vlog -->
+      <section class="stream-hero" id="stream-hero" aria-label="Uitgelichte vlog">
+        <div class="stream-hero-bg" id="stream-hero-bg"></div>
+        <div class="stream-hero-overlay"></div>
+        <div class="stream-hero-content">
+          <h1 class="stream-hero-title" id="stream-hero-title">PARIS</h1>
+          <p class="stream-hero-meta" id="stream-hero-meta">Frankrijk · 2025</p>
+          <div class="stream-hero-actions">
+            <button type="button" class="btn-stream-play" id="stream-hero-play">Play</button>
+            <button type="button" class="btn-stream-add" id="stream-hero-add" aria-label="Toevoegen aan lijst">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Mijn lijst -->
+      <section class="stream-mylist" aria-label="Mijn lijst">
+        <h2 class="stream-mylist-title">Mijn lijst</h2>
+        <div class="stream-mylist-scroller" id="stream-mylist">
+          <noscript><p class="mylist-empty">Zet JavaScript aan om de vlogs te zien.</p></noscript>
+        </div>
+      </section>
+
+      <!-- Shorts (day trips) -->
+      <section class="stream-row" aria-label="Shorts">
+        <h2 class="stream-row-title">Shorts</h2>
+        <div class="stream-row-scroller" id="stream-shorts"></div>
+      </section>
+
+      <!-- Series -->
+      <section class="stream-row" aria-label="Series">
+        <h2 class="stream-row-title">Series</h2>
+        <div class="stream-row-scroller" id="stream-series"></div>
+      </section>
+
+      <!-- Documentaries -->
+      <section class="stream-row" aria-label="Documentaries">
+        <h2 class="stream-row-title">Documentaries</h2>
+        <div class="stream-row-scroller" id="stream-documentaries"></div>
+      </section>
+
+      <!-- Events -->
+      <section class="stream-row" aria-label="Events">
+        <h2 class="stream-row-title">Events</h2>
+        <div class="stream-row-scroller" id="stream-events"></div>
+      </section>
+    </main>
+
+    <!-- YouTube player overlay -->
+    <div id="player-overlay" class="player-overlay" aria-hidden="true">
+      <div class="player-dialog" role="dialog" aria-modal="true" aria-labelledby="player-title">
+        <button type="button" class="btn-icon player-close" id="player-close" aria-label="Sluiten">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+        <div class="player-aspect">
+          <iframe id="player-frame" src="" title="DaphneVlogs player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <h2 id="player-title" class="player-title"></h2>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    if (window.location.protocol === 'file:') {
+      document.body.insertAdjacentHTML('afterbegin', '<div style="position:fixed;top:0;left:0;right:0;z-index:100;background:#b91c1c;color:#fff;padding:0.75rem 1rem;text-align:center;font-size:0.9rem;">Open deze site via een lokale server om vlogs te zien: <code style="background:rgba(0,0,0,0.2);padding:0.2rem 0.4rem;border-radius:4px;">python3 -m http.server 8080</code> en ga naar <code style="background:rgba(0,0,0,0.2);padding:0.2rem 0.4rem;border-radius:4px;">http://localhost:8080</code></div>');
+    }
+  </script>
+  <script type="module" src="main.js"></script>
+</body>
+</html>

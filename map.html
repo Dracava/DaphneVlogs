@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Map – DaphneVlogs</title>
+  <link rel="icon" type="image/png" href="images/Logo DV.png">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="page-map">
+  <div class="app">
+    <header class="topbar-stream">
+      <nav class="topbar-nav" aria-label="Hoofdnavigatie">
+        <a href="index.html" class="topbar-logo" aria-label="DaphneVlogs home">
+          <img src="images/Logo DV.png" alt="DaphneVlogs logo">
+        </a>
+        <a href="index.html" class="topbar-link">Vlogs</a>
+        <a href="map.html" class="topbar-link is-active">Map</a>
+      </nav>
+      <div class="topbar-right">
+        <button type="button" class="btn-icon topbar-icon" aria-label="Meldingen">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        </button>
+        <a href="index.html" class="topbar-avatar" aria-label="Profiel">DV</a>
+      </div>
+    </header>
+
+    <main class="main">
+      <section class="world-section world-section--full" aria-label="Vlogs per land">
+        <div class="world-layout">
+          <div id="globe-container"></div>
+          <!-- Dashboard met vlogs rechts (desktop) / onderin (mobile) -->
+          <aside id="world-sheet" class="world-sheet" aria-hidden="true">
+            <div id="world-sheet-handle" class="world-sheet-handle"></div>
+            <div class="world-sheet-inner">
+              <div class="world-vlogs-header">
+                <div>
+                  <span class="world-vlogs-label">Land</span>
+                  <h3 id="world-country-name" class="world-country-name">Nog geen land gekozen</h3>
+                </div>
+                <span id="world-country-count" class="world-country-count">0 vlogs</span>
+              </div>
+
+              <div id="country-vlog-list" class="country-vlog-list">
+                <p class="world-empty">Klik op een land op de wereldbol om vlogs te ontdekken.</p>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <!-- YouTube player overlay (gedeeld met DaphneVlogs) -->
+    <div id="player-overlay" class="player-overlay" aria-hidden="true">
+      <div class="player-dialog" role="dialog" aria-modal="true" aria-labelledby="player-title">
+        <button type="button" class="btn-icon player-close" id="player-close" aria-label="Sluiten">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M18 6L6 18M6 6l12 12"/>
+          </svg>
+        </button>
+        <div class="player-aspect">
+          <iframe
+            id="player-frame"
+            src=""
+            title="DaphneVlogs player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <h2 id="player-title" class="player-title"></h2>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="main.js"></script>
+</body>
+</html>
+
