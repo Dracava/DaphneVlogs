@@ -783,14 +783,14 @@ body {
   }
 
   .world-section--full #globe-container {
-    flex: 0 0 55%;
+    flex: 1 1 60%;
     min-width: 0;
   }
 
   .world-section--full .world-sheet {
     position: relative;
-    flex: 0 0 460px;
-    max-width: 480px;
+    flex: 0 0 400px;
+    max-width: 400px;
     z-index: 5;
     height: 100%;
     display: flex;
@@ -943,10 +943,10 @@ body {
 }
 
 .country-vlog-thumb {
-  width: 110px;
-  height: 62px;
-  min-width: 110px;
-  min-height: 62px;
+  width: 96px;
+  height: 54px;
+  min-width: 96px;
+  min-height: 54px;
   border-radius: 0.55rem;
   object-fit: cover;
   background: radial-gradient(circle at 0 0, rgba(236, 72, 153, 0.55), transparent 55%), #050014;
@@ -962,18 +962,18 @@ body {
 
 .country-vlog-title {
   margin: 0;
-  font-size: 0.95rem;
+  font-size: 0.86rem;
   font-weight: 500;
   color: #f9fafb;
 }
 
 .country-vlog-sub {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: #9ca3af;
 }
 
 .country-vlog-duration {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: #e5e7eb;
 }
 
