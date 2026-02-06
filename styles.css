@@ -667,8 +667,15 @@ body {
 .info-modal-meta-value {
   font-size: 0.95rem;
   font-weight: 500;
-  color: #fff;
-  margin-left: auto;
+}
+
+.info-modal-description {
+  margin: 1rem 0 0;
+  padding: 1rem 0;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.5;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .info-modal-actions {
