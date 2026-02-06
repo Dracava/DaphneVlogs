@@ -25,6 +25,18 @@ Daarna in de browser: **http://localhost:8080**
 
 Als je `index.html` direct opent (`file://`) kunnen het laden van de wereldbol en kaart door CORS fout gaan.
 
+## Vlogs importeren uit Excel (met YouTube durations)
+
+1. **YouTube API key** – Maak een key aan via [Google Cloud Console](https://console.cloud.google.com/) → APIs & Services → YouTube Data API v3 → Credentials → Create API Key
+2. **Config** – Kopieer `scripts/config.example.json` naar `scripts/config.json` en voeg je API key toe:
+   ```json
+   { "youtube_api_key": "JOUW_API_KEY" }
+   ```
+3. **Excel** – Plaats `daphnevlogs_overzicht_v6.xlsx` in `~/Downloads/`
+4. **Run** – `python3 scripts/import_excel.py`
+
+Het script haalt automatisch de duration van elke YouTube-video op via de API. Zonder API key blijven durations "—".
+
 ## Bestanden
 
 - `index.html` – Paginastructuur, header, globe-container, stats-panel, landkaart

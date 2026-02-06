@@ -1,18 +1,36 @@
 #!/usr/bin/env python3
 """
 Importeer vlogs uit daphnevlogs_overzicht_v6.xlsx naar de website.
-Plaats het Excel-bestand in Downloads en run: python3 scripts/import_excel.py
+Haalt automatisch de duration op via de YouTube Data API v3.
+
+Stappen:
+1. Kopieer scripts/config.example.json naar scripts/config.json
+2. Voeg je YouTube API key toe in scripts/config.json
+3. Plaats Excel in ~/Downloads/daphnevlogs_overzicht_v6.xlsx
+4. Run: python3 scripts/import_excel.py
 """
 import json
 import os
 import re
+import ssl
 import sys
+import urllib.error
+import urllib.request
+from urllib.parse import parse_qs, urlparse
+
+try:
+    import certifi
+    SSL_CONTEXT = ssl.create_default_context(cafile=certifi.where())
+except ImportError:
+    SSL_CONTEXT = None
 
 try:
     import openpyxl
 except ImportError:
     print("Installeer openpyxl: pip3 install openpyxl")
     sys.exit(1)
+
+CONFIG_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'config.json')
 
 COUNTRY_MAP = {
     'Paris': ('fr', 'Frankrijk'),
@@ -75,6 +93,101 @@ def esc_js(s):
     return str(s).replace('\\', '\\\\').replace("'", "\\'").replace('\n', ' ').replace('\r', '')
 
 
+def load_api_key():
+    """Laad YouTube API key uit scripts/config.json"""
+    example_path = os.path.join(os.path.dirname(CONFIG_PATH), 'config.example.json')
+    if not os.path.exists(CONFIG_PATH) and os.path.exists(example_path):
+        import shutil
+        shutil.copy(example_path, CONFIG_PATH)
+        print("Eerste run: scripts/config.json aangemaakt. Voeg je YouTube API key toe en run opnieuw.")
+        return None
+    if not os.path.exists(CONFIG_PATH):
+        return None
+    try:
+        with open(CONFIG_PATH, 'r', encoding='utf-8') as f:
+            cfg = json.load(f)
+        key = (cfg.get('youtube_api_key') or '').strip()
+        return key if key and key != 'VOEG_HIER_JOUW_YOUTUBE_API_KEY_TOE' else None
+    except (json.JSONDecodeError, OSError):
+        return None
+
+
+def youtube_video_id(url):
+    """Haal YouTube video ID uit URL (youtu.be of youtube.com)."""
+    if not url or not isinstance(url, str):
+        return None
+    url = url.strip()
+    try:
+        if 'youtu.be/' in url:
+            return url.split('youtu.be/')[-1].split('?')[0].split('/')[0] or None
+        if 'youtube.com' in url:
+            parsed = urlparse(url)
+            return parse_qs(parsed.query).get('v', [None])[0]
+    except Exception:
+        pass
+    return None
+
+
+def parse_iso8601_duration(iso_str):
+    """Parse YouTube ISO 8601 duration (PT1H2M10S) naar mm:ss of hh:mm:ss."""
+    if not iso_str or not isinstance(iso_str, str):
+        return None
+    # PT1H2M10S, PT10M30S, PT30S, etc.
+    m = re.match(r'PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?', iso_str.upper())
+    if not m:
+        return None
+    h = int(m.group(1) or 0)
+    m_min = int(m.group(2) or 0)
+    s = int(m.group(3) or 0)
+    if h > 0:
+        return f"{h}:{m_min:02d}:{s:02d}"
+    return f"{m_min}:{s:02d}" if (m_min or s) else None
+
+
+def fetch_youtube_durations(vlogs, api_key):
+    """
+    Haal durations op via YouTube Data API v3.
+    Retourneert dict: {video_id: 'mm:ss' of 'hh:mm:ss'}
+    """
+    if not api_key:
+        return {}
+    video_ids = []
+    url_to_id = {}
+    for v in vlogs:
+        vid = youtube_video_id(v.get('url'))
+        if vid:
+            video_ids.append(vid)
+            url_to_id[vid] = vid
+    if not video_ids:
+        return {}
+
+    result = {}
+    # YouTube API: max 50 ids per request
+    batch_size = 50
+    for i in range(0, len(video_ids), batch_size):
+        batch = video_ids[i:i + batch_size]
+        ids_param = ','.join(batch)
+        url = f"https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id={ids_param}&key={api_key}"
+        try:
+            req = urllib.request.Request(url)
+            kwargs = {'timeout': 15}
+            if SSL_CONTEXT:
+                kwargs['context'] = SSL_CONTEXT
+            with urllib.request.urlopen(req, **kwargs) as resp:
+                data = json.loads(resp.read().decode())
+            for item in data.get('items', []):
+                vid = item.get('id')
+                dur = item.get('contentDetails', {}).get('duration')
+                if vid and dur:
+                    parsed = parse_iso8601_duration(dur)
+                    if parsed:
+                        result[vid] = parsed
+        except (urllib.error.HTTPError, urllib.error.URLError, json.JSONDecodeError, OSError) as e:
+            print(f"Waarschuwing: YouTube API fout ({e}), durations blijven '—'")
+            break
+    return result
+
+
 def main():
     if not os.path.exists(EXCEL_PATH):
         print(f"Excel-bestand niet gevonden: {EXCEL_PATH}")
@@ -126,6 +239,19 @@ def main():
 
     wb.close()
     all_vlogs.sort(key=lambda x: (-x['year'], x['title'] or ''))
+
+    # Haal durations op via YouTube API
+    api_key = load_api_key()
+    if api_key:
+        durations = fetch_youtube_durations(all_vlogs, api_key)
+        for v in all_vlogs:
+            vid = youtube_video_id(v.get('url'))
+            if vid and vid in durations:
+                v['duration'] = durations[vid]
+        print(f"Durations opgehaald voor {len(durations)} video's")
+    else:
+        print("Geen YouTube API key gevonden in scripts/config.json – durations blijven '—'")
+        print("Kopieer config.example.json naar config.json en voeg je API key toe.")
 
     # Genereer JavaScript VLOGS array
     lines = ['// VLOGS uit daphnevlogs_overzicht_v6.xlsx', 'const VLOGS = [']

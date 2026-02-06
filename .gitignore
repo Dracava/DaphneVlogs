@@ -1,0 +1,10 @@
+# API key (nooit committen)
+scripts/config.json
+
+# macOS
+.DS_Store
+
+# Gegenereerde bestanden (opnieuw te maken via scripts/import_excel.py)
+vlogs_array.js
+vlogs_data.json
+vlogs_export.json
