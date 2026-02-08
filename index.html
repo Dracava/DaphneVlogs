@@ -39,8 +39,8 @@
           <p class="stream-hero-meta" id="stream-hero-meta">Frankrijk · 2025</p>
           <div class="stream-hero-actions">
             <button type="button" class="btn-stream-play" id="stream-hero-play">Play</button>
-            <button type="button" class="btn-stream-add" id="stream-hero-add" aria-label="Add to list">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            <button type="button" class="btn-stream-random" id="stream-hero-random" aria-label="Play random vlog">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 3h5v5"/><path d="M4 20L21 3"/><path d="M21 16v5h-5"/><path d="M15 15l6 6"/><path d="M4 4l5 5"/></svg>
             </button>
           </div>
         </div>
@@ -54,28 +54,76 @@
         </div>
       </section>
 
-      <!-- Shorts (day trips) -->
-      <section class="stream-row" aria-label="Shorts">
-        <h2 class="stream-row-title">Shorts</h2>
-        <div class="stream-row-scroller" id="stream-shorts"></div>
-      </section>
-
-      <!-- Series -->
-      <section class="stream-row" aria-label="Series">
-        <h2 class="stream-row-title">Series</h2>
-        <div class="stream-row-scroller" id="stream-series"></div>
-      </section>
-
-      <!-- Documentaries -->
-      <section class="stream-row" aria-label="Documentaries">
-        <h2 class="stream-row-title">Documentaries</h2>
-        <div class="stream-row-scroller" id="stream-documentaries"></div>
-      </section>
-
       <!-- Events -->
       <section class="stream-row" aria-label="Events">
         <h2 class="stream-row-title">Events</h2>
         <div class="stream-row-scroller" id="stream-events"></div>
+      </section>
+
+      <!-- Projects -->
+      <section class="stream-row" aria-label="Projects">
+        <h2 class="stream-row-title">Projects</h2>
+        <div class="stream-row-scroller" id="stream-projects"></div>
+      </section>
+
+      <!-- Graduations -->
+      <section class="stream-row" aria-label="Graduations">
+        <h2 class="stream-row-title">Graduations</h2>
+        <div class="stream-row-scroller" id="stream-graduations"></div>
+      </section>
+
+      <!-- Birthdays -->
+      <section class="stream-row" aria-label="Birthdays">
+        <h2 class="stream-row-title">Birthdays</h2>
+        <div class="stream-row-scroller" id="stream-birthdays"></div>
+      </section>
+
+      <!-- Sport -->
+      <section class="stream-row" aria-label="Sport">
+        <h2 class="stream-row-title">Sport</h2>
+        <div class="stream-row-scroller" id="stream-sport"></div>
+      </section>
+
+      <!-- Concerts -->
+      <section class="stream-row" aria-label="Concerts">
+        <h2 class="stream-row-title">Concerts</h2>
+        <div class="stream-row-scroller" id="stream-concerts"></div>
+      </section>
+
+      <!-- Home -->
+      <section class="stream-row" aria-label="Home">
+        <h2 class="stream-row-title">Home</h2>
+        <div class="stream-row-scroller" id="stream-home"></div>
+      </section>
+
+      <!-- Holidays -->
+      <section class="stream-row" aria-label="Holidays">
+        <h2 class="stream-row-title">Holidays</h2>
+        <div class="stream-row-scroller" id="stream-holidays"></div>
+      </section>
+
+      <!-- Vacations -->
+      <section class="stream-row" aria-label="Vacations">
+        <h2 class="stream-row-title">Vacations</h2>
+        <div class="stream-row-scroller" id="stream-vacations"></div>
+      </section>
+
+      <!-- City Trips -->
+      <section class="stream-row" aria-label="City Trips">
+        <h2 class="stream-row-title">City Trips</h2>
+        <div class="stream-row-scroller" id="stream-city-trips"></div>
+      </section>
+
+      <!-- Outings -->
+      <section class="stream-row" aria-label="Outings">
+        <h2 class="stream-row-title">Outings</h2>
+        <div class="stream-row-scroller" id="stream-outings"></div>
+      </section>
+
+      <!-- Funerals -->
+      <section class="stream-row" aria-label="Funerals">
+        <h2 class="stream-row-title">Funerals</h2>
+        <div class="stream-row-scroller" id="stream-funerals"></div>
       </section>
     </main>
 
@@ -98,12 +146,13 @@
           <div class="search-filter-group">
             <label class="search-filter-label">Duration (min)</label>
             <div class="search-duration">
-              <div class="search-range-track">
+              <div class="search-range-track" id="search-duration-track">
                 <div class="search-range-fill" id="search-duration-fill"></div>
-                <input type="range" id="search-duration-min" class="search-range" min="0" max="120" value="0" step="1" aria-label="Minimum duration">
-                <input type="range" id="search-duration-max" class="search-range" min="0" max="120" value="120" step="1" aria-label="Maximum duration">
+                <input type="range" id="search-duration-min" class="search-range" min="0" max="70" value="0" step="1" aria-label="Minimum duration">
+                <input type="range" id="search-duration-max" class="search-range" min="0" max="70" value="70" step="1" aria-label="Maximum duration">
+                <div class="search-range-overlay" id="search-duration-overlay" aria-hidden="true"></div>
               </div>
-              <span id="search-duration-label" class="search-duration-label">0 – 120 min</span>
+              <span id="search-duration-label" class="search-duration-label">0 – 70 min</span>
             </div>
           </div>
         </div>

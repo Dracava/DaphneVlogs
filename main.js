@@ -92,6 +92,102 @@ function getCountryNameEn(code) {
 // VLOGS uit daphnevlogs_overzicht_v6.xlsx
 const VLOGS = [
   {
+    id: 'mixed-2026-winter',
+    title: 'Winter 2026',
+    countryCode: 'nl',
+    countryName: 'Nederland',
+    dateRange: '2026',
+    duration: '—',
+    url: 'https://youtu.be/qV-UASn2PTI',
+    year: 2026,
+    isPopular: false,
+    isFavorite: false,
+    categories: ['event'],
+    description: ''
+  },
+  {
+    id: 'mixed-2026-new-years-eve',
+    title: 'New Years Eve 2025-2026',
+    countryCode: 'nl',
+    countryName: 'Nederland',
+    dateRange: '31 December 2025',
+    duration: '—',
+    url: 'https://youtu.be/GJOn8Rw7_Lk',
+    year: 2026,
+    isPopular: false,
+    isFavorite: false,
+    categories: ['event', 'holiday'],
+    description: ''
+  },
+  {
+    id: 'mixed-2025-d1-h2-diner',
+    title: 'D1 & H2 Diner',
+    countryCode: 'nl',
+    countryName: 'Nederland',
+    dateRange: '30 May 2025',
+    duration: '—',
+    url: 'https://youtu.be/BVZYnRUJatg',
+    year: 2025,
+    isPopular: false,
+    isFavorite: false,
+    categories: ['event', 'sport'],
+    description: ''
+  },
+  {
+    id: 'vacation-2025-tenerife',
+    title: 'Tenerife',
+    countryCode: 'es',
+    countryName: 'Spanje',
+    dateRange: '9 November 2025 - 14 November 2025',
+    duration: '—',
+    url: 'https://youtu.be/jVY379I0cWs',
+    year: 2025,
+    isPopular: false,
+    isFavorite: false,
+    description: ''
+  },
+  {
+    id: 'mixed-2025-birthday-kaloyan',
+    title: 'Birthday Kaloyan',
+    countryCode: 'bg',
+    countryName: 'Bulgarije',
+    dateRange: '25 August 2025',
+    duration: '—',
+    url: 'https://youtu.be/qqzmVeDfn30',
+    year: 2025,
+    isPopular: false,
+    isFavorite: false,
+    categories: ['event', 'birthday'],
+    description: ''
+  },
+  {
+    id: 'vacation-2025-italy',
+    title: 'Italia',
+    countryCode: 'it',
+    countryName: 'Italië',
+    dateRange: '26 September 2025 - 3 October 2025',
+    duration: '—',
+    url: 'https://youtu.be/iW2sglR2eds',
+    year: 2025,
+    isPopular: false,
+    isFavorite: false,
+    description: ''
+  },
+  {
+    id: 'mixed-2024-roaring-twenties',
+    title: 'Roaring Twenties',
+    countryCode: 'nl',
+    countryName: 'Nederland',
+    dateRange: '8 June 2024',
+    duration: '—',
+    url: 'https://youtu.be/q-i0Ih_og9A',
+    year: 2024,
+    isPopular: false,
+    isFavorite: false,
+    categories: ['event', 'birthday'],
+    description: ''
+  },
+  {
     id: 'vacation-2025-america-pt-1-5',
     title: 'Death Valley, Grand Canyon & Las Vegas',
     countryCode: 'us',
@@ -115,7 +211,7 @@ const VLOGS = [
     year: 2025,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "concert"],
     description: 'DAMIANO DAVID - Funny Little Fears (World Tour) in AFAS Live'
   },
   {
@@ -168,7 +264,7 @@ const VLOGS = [
     year: 2025,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "graduation"],
     description: 'Graduation day of my masters degree Media Technology in Leiden'
   },
   {
@@ -182,7 +278,7 @@ const VLOGS = [
     year: 2025,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "home"],
     description: 'Creating some art on a Tuesday evening at Badhuisstraat.'
   },
   {
@@ -196,6 +292,7 @@ const VLOGS = [
     year: 2025,
     isPopular: false,
     isFavorite: false,
+    categories: ['birthday'],
     description: 'Going to Disneyland in Paris for Maria\'s 10th birthday.'
   },
   {
@@ -209,7 +306,7 @@ const VLOGS = [
     year: 2025,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "sport"],
     description: 'All teams of DSZ WAVE played at home on the same day.'
   },
   {
@@ -223,7 +320,7 @@ const VLOGS = [
     year: 2024,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "birthday"],
     description: 'A good balkan birthday at the crack house.'
   },
   {
@@ -237,6 +334,7 @@ const VLOGS = [
     year: 2024,
     isPopular: false,
     isFavorite: false,
+    categories: ['citytrip'],
     description: 'Excursion with the master Media Technology to the exhibit of the Verbeke Foundation near Antwerpen, Belgium.'
   },
   {
@@ -255,8 +353,8 @@ const VLOGS = [
   {
     id: 'mixed-2024-baptism-of-kaloyan-7',
     title: 'Baptism of Kaloyan',
-    countryCode: 'nl',
-    countryName: 'Nederland',
+    countryCode: 'bg',
+    countryName: 'Bulgarije',
     dateRange: '2024',
     duration: '4:05',
     url: 'https://youtu.be/s11DRrdHEik?si=bz8HtoCeVHFVoBIp',
@@ -303,7 +401,7 @@ const VLOGS = [
     year: 2024,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "holiday"],
     description: 'Celebrating Christmas dinner with friends at Badhuisstraat.'
   },
   {
@@ -317,7 +415,7 @@ const VLOGS = [
     year: 2024,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "graduation"],
     description: 'Aleksandar Ivanov graduating User Experience Design from The Hague University of Applied Sciences'
   },
   {
@@ -331,21 +429,112 @@ const VLOGS = [
     year: 2024,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "graduation", "birthday"],
     description: 'Jurriaan Eduard Varekamp is celebrating his birthday while also graduating his masters in Pharmaceutical Medicine.'
   },
   {
-    id: 'vacation-2024-indonesia-6',
-    title: 'Indonesia',
+    id: 'vacation-2024-indonesia-manado',
+    title: 'Manado',
     countryCode: 'id',
     countryName: 'Indonesië',
-    dateRange: '29 September 2024 - 28 October 2024',
+    dateRange: 'September - October 2024',
     duration: '26:34',
     url: 'https://youtu.be/25Ox32-WtmE?si=ykkyi8fckxvqd5fb',
     year: 2024,
     isPopular: false,
     isFavorite: false,
     description: 'My mother and uncle are returning back to Indonesia after more than sixty years to visit family, and she is bringing me and my brother along.'
+  },
+  {
+    id: 'vacation-2024-indonesia-jakarta',
+    title: 'Jakarta',
+    countryCode: 'id',
+    countryName: 'Indonesië',
+    dateRange: 'September - October 2024',
+    duration: '8:16',
+    url: 'https://youtu.be/CANAkHfglJI?si=ghzknnDTPQfFOpl8',
+    year: 2024,
+    isPopular: false,
+    isFavorite: false,
+    description: 'Exploring Jakarta during the Indonesia family trip.'
+  },
+  {
+    id: 'vacation-2024-indonesia-bogor-bandung',
+    title: 'Bogor & Bandung',
+    countryCode: 'id',
+    countryName: 'Indonesië',
+    dateRange: 'September - October 2024',
+    duration: '11:30',
+    url: 'https://youtu.be/DxWPAGLFurE?si=wIqtl5fTN3n9xO0g',
+    year: 2024,
+    isPopular: false,
+    isFavorite: false,
+    description: 'Visiting Bogor and Bandung in West Java.'
+  },
+  {
+    id: 'vacation-2024-indonesia-yogyakarta',
+    title: 'Yogyakarta',
+    countryCode: 'id',
+    countryName: 'Indonesië',
+    dateRange: 'September - October 2024',
+    duration: '19:36',
+    url: 'https://youtu.be/XAG14HWVr8s?si=1oMsdbMuYhu0dqtd',
+    year: 2024,
+    isPopular: false,
+    isFavorite: false,
+    description: 'Exploring Yogyakarta and the surrounding temples.'
+  },
+  {
+    id: 'vacation-2024-indonesia-malang',
+    title: 'Malang',
+    countryCode: 'id',
+    countryName: 'Indonesië',
+    dateRange: 'September - October 2024',
+    duration: '16:47',
+    url: 'https://youtu.be/gKnOuyANkUY?si=ZMxm-tS3ibN5IibX',
+    year: 2024,
+    isPopular: false,
+    isFavorite: false,
+    description: 'Visiting Malang in East Java.'
+  },
+  {
+    id: 'vacation-2024-indonesia-bali',
+    title: 'Bali',
+    countryCode: 'id',
+    countryName: 'Indonesië',
+    dateRange: 'September - October 2024',
+    duration: '19:11',
+    url: 'https://youtu.be/idlO-cmlwHE?si=72V4w7SkcL7nj-Ji',
+    year: 2024,
+    isPopular: false,
+    isFavorite: false,
+    description: 'Bali during the Indonesia family trip.'
+  },
+  {
+    id: 'vacation-2024-indonesia-bromo',
+    title: 'Mountain Bromo',
+    countryCode: 'id',
+    countryName: 'Indonesië',
+    dateRange: 'September - October 2024',
+    duration: '1:08',
+    url: 'https://youtu.be/_ENHHulhHtY?si=VeIX8iHHbqcBrtcM',
+    year: 2024,
+    isPopular: false,
+    isFavorite: false,
+    description: 'Mount Bromo volcano in East Java.'
+  },
+  {
+    id: 'vacation-2024-singapore',
+    title: 'Singapore',
+    countryCode: 'sg',
+    countryName: 'Singapore',
+    dateRange: 'September - October 2024',
+    duration: '7:48',
+    url: 'https://youtu.be/8mpSHrLPYaI?si=rzuMi0FSc8ijfS8u',
+    year: 2024,
+    isPopular: false,
+    isFavorite: false,
+    description: 'Singapore during the Asia trip.'
   },
   {
     id: 'vacation-2024-london-cambridge-oxford-11',
@@ -362,7 +551,7 @@ const VLOGS = [
   },
   {
     id: 'mixed-2024-music-video-clip-10',
-    title: 'Music video clip',
+    title: 'Music video clip (Røyking)',
     countryCode: 'nl',
     countryName: 'Nederland',
     dateRange: '2024',
@@ -371,7 +560,7 @@ const VLOGS = [
     year: 2024,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "project"],
     description: 'Gewoon Gemiddeld by Røyking.'
   },
   {
@@ -398,6 +587,7 @@ const VLOGS = [
     year: 2024,
     isPopular: false,
     isFavorite: false,
+    categories: ['birthday'],
     description: 'Birthday trip with Noel, Bo, Sara, Mattaya, Soph, Arie, Karol, Jeanne and Alex to Italy.'
   },
   {
@@ -424,7 +614,7 @@ const VLOGS = [
     year: 2023,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "birthday"],
     description: 'For my father\'s birthday my brother (a chef) created Michelin\'s star level meals in a three course dinner.'
   },
   {
@@ -438,6 +628,7 @@ const VLOGS = [
     year: 2023,
     isPopular: false,
     isFavorite: false,
+    categories: ['citytrip'],
     description: 'Trip to Breda.'
   },
   {
@@ -451,6 +642,7 @@ const VLOGS = [
     year: 2023,
     isPopular: false,
     isFavorite: false,
+    categories: ['citytrip'],
     description: 'Visiting Belgium for the 11km CM Urban Walk Gent, which took us through various buildings and hidden spots.'
   },
   {
@@ -477,7 +669,7 @@ const VLOGS = [
     year: 2023,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "holiday"],
     description: 'Renting a boat and sailing through The Hague during kingsday while the rest of the city is at home with a hangover.'
   },
   {
@@ -504,7 +696,7 @@ const VLOGS = [
     year: 2023,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "funeral"],
     description: 'In loving memory of our dear friend Loek, whose sudden departure on May 12th, 2023, left an irreplaceable void in our hearts. This video was a request of the family and serves as a tribute to his remarkable spirit and the enduring bonds of friendship left behind.'
   },
   {
@@ -518,7 +710,7 @@ const VLOGS = [
     year: 2023,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "home"],
     description: 'Making pasta from scratch with Aleks, Karol and Jeanne at Badhuisstraat.'
   },
   {
@@ -532,7 +724,7 @@ const VLOGS = [
     year: 2023,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "concert"],
     description: 'Golden ticket to Maneskin playing in the Ziggo Dome in The Netherlands.'
   },
   {
@@ -546,7 +738,7 @@ const VLOGS = [
     year: 2023,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "project"],
     description: 'For the Strategies in Creative & Performing Arts course in my masters we had to come up with a new fictitious strategy with which artists create their work. We had to add existing art that supposedly would fall under this strategy. I decided to make this assignment in video form.'
   },
   {
@@ -573,7 +765,7 @@ const VLOGS = [
     year: 2023,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "birthday"],
     description: 'The three September babies; Joël, Ines and Mike celebrate their birthdays on a combined evening.'
   },
   {
@@ -587,7 +779,7 @@ const VLOGS = [
     year: 2023,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "holiday"],
     description: 'Having Thanksgiving dinner at Yanna\'s huis with the Media Technology class.'
   },
   {
@@ -601,7 +793,7 @@ const VLOGS = [
     year: 2023,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "outing"],
     description: 'Going with Aleks, Ines, Karol and Jeanne to the Video Game Museum in Zoetermeer.'
   },
   {
@@ -615,6 +807,7 @@ const VLOGS = [
     year: 2022,
     isPopular: false,
     isFavorite: false,
+    categories: ['citytrip'],
     description: 'Experiencing a very 18+ non-kosher Weekend in Amsterdam with Jolijn while fighting for my life.'
   },
   {
@@ -628,6 +821,7 @@ const VLOGS = [
     year: 2022,
     isPopular: false,
     isFavorite: false,
+    categories: ['citytrip'],
     description: 'Day trip to Amsterdam to celebrate our second year anniversary.'
   },
   {
@@ -641,7 +835,7 @@ const VLOGS = [
     year: 2022,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "outing"],
     description: 'Going with the gang to Amsterdam to see some pretty lights outside, because there is nothing else to do during the lockdown.'
   },
   {
@@ -655,7 +849,7 @@ const VLOGS = [
     year: 2022,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "outing"],
     description: 'Together with Antonina and Nayden we went to Eindhoven in order to visit the Dutch Design Week of 2023.'
   },
   {
@@ -669,7 +863,7 @@ const VLOGS = [
     year: 2022,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "outing"],
     description: 'Marko, Anastasiia and her friend come to The Hague to spend some time at the beach with us.'
   },
   {
@@ -683,7 +877,7 @@ const VLOGS = [
     year: 2022,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "outing"],
     description: 'Julie, Ananya, Karol, Chiini, Demi explore a large scale multi-sensory exhibition.'
   },
   {
@@ -723,7 +917,7 @@ const VLOGS = [
     year: 2022,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "funeral"],
     description: 'This video is a tribute to my grandmother\'s remarkable life in Indonesia and The Netherlands. May she rest in piece.'
   },
   {
@@ -737,6 +931,7 @@ const VLOGS = [
     year: 2021,
     isPopular: false,
     isFavorite: false,
+    categories: ['citytrip'],
     description: 'Going to Belgium with Melinde to avoid the COVID lockdowns in The Netherlands.'
   },
   {
@@ -750,7 +945,7 @@ const VLOGS = [
     year: 2021,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "birthday"],
     description: 'Aleks\' 22nd birthday celebrated at van der Palmstraat and in the Mall of the Netherlands in Voorburg.'
   },
   {
@@ -790,7 +985,7 @@ const VLOGS = [
     year: 2021,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "project"],
     description: 'Painting the walls of the new restaurant called Burgers & Bowls in Scheveningen.'
   },
   {
@@ -804,7 +999,7 @@ const VLOGS = [
     year: 2021,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "home"],
     description: 'Making pina colada and cutting a beautiful pinapple from Sligro.'
   },
   {
@@ -818,7 +1013,7 @@ const VLOGS = [
     year: 2021,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "holiday"],
     description: 'Several people from the bachelor studies come together in December to celebrate Sinterklaas by doing Secret Santa.'
   },
   {
@@ -832,7 +1027,7 @@ const VLOGS = [
     year: 2021,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "project"],
     description: 'For the course HCI in the bachelor User Experience Design we needed to create a robot with Arduino. My final project was this artificial creature called Snappy.'
   },
   {
@@ -939,7 +1134,7 @@ const VLOGS = [
     year: 2020,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"]
+    categories: ["event", "outing"]
   },
   {
     id: 'mixed-2020-t-h-e-g-u-y-s-32',
@@ -993,7 +1188,7 @@ const VLOGS = [
     year: 2017,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "project"],
     description: 'For a high school assignment I had to adapt a known fairytale into something different. In my horror version of Red Riding Hood the hunter collaborates with the wolf to murder the little girl.'
   },
   {
@@ -1277,6 +1472,9 @@ function getOtherVlogs() {
 }
 
 function getVlogsByCategory(categoryKey) {
+  if (categoryKey === 'vacation') {
+    return VLOGS.filter((v) => (v.id || '').startsWith('vacation-'));
+  }
   return VLOGS.filter((v) => (v.categories || []).includes(categoryKey));
 }
 
@@ -1293,10 +1491,36 @@ function parseDurationToMinutes(duration) {
   return h * 60 + m + s / 60;
 }
 
+// Extra search terms per country (so "america" finds US vlogs, "croatia" finds Dubrovnik, etc.)
+const COUNTRY_SEARCH_TERMS = {
+  us: 'america usa united states',
+  gb: 'england uk britain united kingdom',
+  nl: 'netherlands holland',
+  de: 'germany',
+  fr: 'france',
+  it: 'italy',
+  es: 'spain',
+  at: 'austria',
+  be: 'belgium',
+  hr: 'croatia',
+  bg: 'bulgaria',
+  ro: 'romania',
+  hu: 'hungary',
+  id: 'indonesia',
+  sg: 'singapore',
+};
+
 function filterVlogsBySearch(vlogs, { query, years, minDur, maxDur }) {
   return vlogs.filter((v) => {
     const q = (query || '').trim().toLowerCase();
-    if (q && !(v.title || '').toLowerCase().includes(q)) return false;
+    if (q) {
+      const title = (v.title || '').toLowerCase();
+      const countryEn = (getCountryNameEn(v.countryCode) || '').toLowerCase();
+      const countryNl = (v.countryName || '').toLowerCase();
+      const extras = (COUNTRY_SEARCH_TERMS[(v.countryCode || '').toLowerCase()] || '').toLowerCase();
+      const searchable = `${title} ${countryEn} ${countryNl} ${extras}`.trim();
+      if (!searchable.includes(q)) return false;
+    }
     if (years && years.length > 0 && !years.includes(v.year)) return false;
     const dur = parseDurationToMinutes(v.duration);
     if (dur != null) {
@@ -1462,7 +1686,7 @@ function renderFeaturedHero() {
   const titleEl = document.getElementById('stream-hero-title');
   const metaEl = document.getElementById('stream-hero-meta');
   const playBtn = document.getElementById('stream-hero-play');
-  const addBtn = document.getElementById('stream-hero-add');
+  const randomBtn = document.getElementById('stream-hero-random');
   if (!hero || !bg || !titleEl || !metaEl) return;
 
   const vlog = getFeaturedVlog();
@@ -1480,12 +1704,14 @@ function renderFeaturedHero() {
   if (playBtn) {
     playBtn.onclick = () => vlog.url && openPlayer(vlog);
   }
-  if (addBtn) {
-    addBtn.onclick = () => {
-        const params = new URLSearchParams();
-        params.set('country', vlog.countryCode);
-        window.location.href = `map.html?${params.toString()}`;
-      };
+  if (randomBtn) {
+    randomBtn.onclick = () => {
+      const withUrl = VLOGS.filter((v) => v?.url);
+      if (withUrl.length > 0) {
+        const randomVlog = withUrl[Math.floor(Math.random() * withUrl.length)];
+        openPlayer(randomVlog);
+      }
+    };
   }
 }
 
@@ -1684,8 +1910,8 @@ function initSearch() {
 
   function updateDurationFill() {
     const minVal = Number(durationMin?.value ?? 0);
-    const maxVal = Number(durationMax?.value ?? 120);
-    const range = 120;
+    const maxVal = Number(durationMax?.value ?? 70);
+    const range = 70;
     const left = (minVal / range) * 100;
     const width = ((maxVal - minVal) / range) * 100;
     if (durationFill) {
@@ -1710,10 +1936,10 @@ function initSearch() {
   function runSearch() {
     const query = queryInput?.value || '';
     let minD = Number(durationMin?.value ?? 0);
-    let maxD = Number(durationMax?.value ?? 120);
+    let maxD = Number(durationMax?.value ?? 70);
     if (minD > maxD) [minD, maxD] = [maxD, minD];
     const minDur = minD > 0 ? minD : null;
-    const maxDur = maxD < 120 ? maxD : null;
+    const maxDur = maxD < 70 ? maxD : null;
     const filtered = filterVlogsBySearch(VLOGS, {
       query,
       years: selectedYears.length > 0 ? selectedYears : null,
@@ -1723,7 +1949,7 @@ function initSearch() {
     const sorted = [...filtered].sort((a, b) => b.year - a.year);
 
     if (durationLabel) {
-      durationLabel.textContent = minD === 0 && maxD === 120 ? 'All' : `${minD} – ${maxD} min`;
+      durationLabel.textContent = minD === 0 && maxD === 70 ? 'All' : `${minD} – ${maxD} min`;
     }
 
     resultsEl.innerHTML = '';
@@ -1774,20 +2000,71 @@ function initSearch() {
   backdrop?.addEventListener('click', closeSearch);
   queryInput?.addEventListener('input', runSearch);
   queryInput?.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSearch(); });
-  durationMin?.addEventListener('input', () => {
-    const minVal = Number(durationMin?.value ?? 0);
-    const maxVal = Number(durationMax?.value ?? 120);
-    if (minVal > maxVal && durationMax) durationMax.value = minVal;
+
+  // Dual-thumb slider: overlay handles clicks/drags for both min and max
+  const durationTrack = document.getElementById('search-duration-track');
+  const durationOverlay = document.getElementById('search-duration-overlay');
+  const RANGE_MAX = 70;
+  let durationDragging = null; // 'min' | 'max' | null
+
+  function getValueFromEvent(e) {
+    const track = durationTrack?.getBoundingClientRect();
+    if (!track) return 0;
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const x = Math.max(0, Math.min(1, (clientX - track.left) / track.width));
+    return Math.round(x * RANGE_MAX);
+  }
+
+  function syncAndSearch() {
+    let minVal = Number(durationMin?.value ?? 0);
+    let maxVal = Number(durationMax?.value ?? 70);
+    if (minVal > maxVal) [minVal, maxVal] = [maxVal, minVal];
+    if (durationMin) durationMin.value = minVal;
+    if (durationMax) durationMax.value = maxVal;
     updateDurationFill();
     runSearch();
-  });
-  durationMax?.addEventListener('input', () => {
-    const minVal = Number(durationMin?.value ?? 0);
-    const maxVal = Number(durationMax?.value ?? 120);
-    if (maxVal < minVal && durationMin) durationMin.value = maxVal;
-    updateDurationFill();
-    runSearch();
-  });
+  }
+
+  function onDurationPointerDown(e) {
+    if (!durationTrack || !durationMin || !durationMax) return;
+    const val = getValueFromEvent(e);
+    const minVal = Number(durationMin.value);
+    const maxVal = Number(durationMax.value);
+    durationDragging = Math.abs(val - minVal) <= Math.abs(val - maxVal) ? 'min' : 'max';
+    if (durationDragging === 'min') {
+      durationMin.value = Math.min(val, maxVal);
+    } else {
+      durationMax.value = Math.max(val, minVal);
+    }
+    syncAndSearch();
+  }
+
+  function onDurationPointerMove(e) {
+    if (!durationDragging || !durationMin || !durationMax) return;
+    e.preventDefault();
+    const val = getValueFromEvent(e);
+    const minVal = Number(durationMin.value);
+    const maxVal = Number(durationMax.value);
+    if (durationDragging === 'min') {
+      durationMin.value = Math.max(0, Math.min(val, maxVal));
+    } else {
+      durationMax.value = Math.max(minVal, Math.min(val, RANGE_MAX));
+    }
+    syncAndSearch();
+  }
+
+  function onDurationPointerUp() {
+    durationDragging = null;
+  }
+
+  if (durationOverlay) {
+    durationOverlay.addEventListener('mousedown', onDurationPointerDown);
+    durationOverlay.addEventListener('touchstart', onDurationPointerDown, { passive: false });
+  }
+  document.addEventListener('mousemove', (e) => { if (durationDragging) onDurationPointerMove(e); });
+  document.addEventListener('mouseup', onDurationPointerUp);
+  document.addEventListener('touchmove', (e) => { if (durationDragging) { e.preventDefault(); onDurationPointerMove(e); } }, { passive: false });
+  document.addEventListener('touchend', onDurationPointerUp);
 
   updateDurationFill();
 
@@ -1829,10 +2106,18 @@ function initStreamPage() {
   if (document.getElementById('stream-hero')) {
     renderFeaturedHero();
     renderMyList();
-    renderCategoryRow('stream-shorts', 'short');
-    renderCategoryRow('stream-series', 'series');
-    renderCategoryRow('stream-documentaries', 'documentary');
     renderCategoryRow('stream-events', 'event');
+    renderCategoryRow('stream-projects', 'project');
+    renderCategoryRow('stream-graduations', 'graduation');
+    renderCategoryRow('stream-birthdays', 'birthday');
+    renderCategoryRow('stream-sport', 'sport');
+    renderCategoryRow('stream-concerts', 'concert');
+    renderCategoryRow('stream-home', 'home');
+    renderCategoryRow('stream-holidays', 'holiday');
+    renderCategoryRow('stream-vacations', 'vacation');
+    renderCategoryRow('stream-city-trips', 'citytrip');
+    renderCategoryRow('stream-outings', 'outing');
+    renderCategoryRow('stream-funerals', 'funeral');
   }
   initGlobe().catch((err) => {
   console.error('Globe initialization failed:', err);
