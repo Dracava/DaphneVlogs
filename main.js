@@ -361,7 +361,7 @@ const VLOGS = [
     year: 2024,
     isPopular: false,
     isFavorite: false,
-    categories: ["event"],
+    categories: ["event", "birthday"],
     description: 'Ivo and Eli\'s son is turning 1 year old. On this day he is baptized in church.'
   },
   {
@@ -656,6 +656,7 @@ const VLOGS = [
     year: 2023,
     isPopular: false,
     isFavorite: false,
+    categories: ['citytrip'],
     description: 'Sailing over the IJsselmeer from Lemmer to Enkhuizen with my uncle\'s sailing boat.'
   },
   {
@@ -1465,15 +1466,15 @@ function getFeaturedVlog() {
   return sorted[0] || null;
 }
 
-function getOtherVlogs() {
-  const featured = getFeaturedVlog();
-  if (!featured) return VLOGS;
-  return VLOGS.filter((v) => v.id !== featured.id);
+function getRecommendedVlogs() {
+  const withUrl = VLOGS.filter((v) => v?.url);
+  const shuffled = [...withUrl].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, 10);
 }
 
 function getVlogsByCategory(categoryKey) {
   if (categoryKey === 'vacation') {
-    return VLOGS.filter((v) => (v.id || '').startsWith('vacation-'));
+    return VLOGS.filter((v) => (v.id || '').startsWith('vacation-') && !(v.categories || []).includes('citytrip'));
   }
   return VLOGS.filter((v) => (v.categories || []).includes(categoryKey));
 }
@@ -1720,13 +1721,13 @@ function renderMyList() {
   if (!container) return;
   container.innerHTML = '';
 
-  const others = getOtherVlogs();
-  if (others.length === 0) {
-    container.innerHTML = '<p class="mylist-empty">No other vlogs.</p>';
+  const recommended = getRecommendedVlogs();
+  if (recommended.length === 0) {
+    container.innerHTML = '<p class="mylist-empty">No vlogs.</p>';
     return;
   }
 
-  others.forEach((vlog) => {
+  recommended.forEach((vlog) => {
     const card = document.createElement('article');
     card.className = 'mylist-poster';
     const thumb = youtubeThumbUrl(vlog);
@@ -2106,18 +2107,17 @@ function initStreamPage() {
   if (document.getElementById('stream-hero')) {
     renderFeaturedHero();
     renderMyList();
-    renderCategoryRow('stream-events', 'event');
-    renderCategoryRow('stream-projects', 'project');
-    renderCategoryRow('stream-graduations', 'graduation');
-    renderCategoryRow('stream-birthdays', 'birthday');
-    renderCategoryRow('stream-sport', 'sport');
-    renderCategoryRow('stream-concerts', 'concert');
-    renderCategoryRow('stream-home', 'home');
-    renderCategoryRow('stream-holidays', 'holiday');
     renderCategoryRow('stream-vacations', 'vacation');
     renderCategoryRow('stream-city-trips', 'citytrip');
     renderCategoryRow('stream-outings', 'outing');
+    renderCategoryRow('stream-holidays', 'holiday');
+    renderCategoryRow('stream-birthdays', 'birthday');
+    renderCategoryRow('stream-home', 'home');
+    renderCategoryRow('stream-graduations', 'graduation');
+    renderCategoryRow('stream-sport', 'sport');
     renderCategoryRow('stream-funerals', 'funeral');
+    renderCategoryRow('stream-concerts', 'concert');
+    renderCategoryRow('stream-projects', 'project');
   }
   initGlobe().catch((err) => {
   console.error('Globe initialization failed:', err);
