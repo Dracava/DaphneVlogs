@@ -23,6 +23,18 @@ const GLOBE_PINS = [
   { lat: 52.52, lng: 13.405, label: 'Berlin', size: 0.4 },
 ];
 
+// Country codes to English names (for display)
+const COUNTRY_NAME_EN = {
+  at: 'Austria', be: 'Belgium', bg: 'Bulgaria', de: 'Germany', es: 'Spain', fr: 'France',
+  gb: 'United Kingdom', hr: 'Croatia', hu: 'Hungary', id: 'Indonesia', it: 'Italy',
+  nl: 'Netherlands', ro: 'Romania', sg: 'Singapore', us: 'United States',
+};
+
+function getCountryNameEn(code) {
+  if (!code) return '';
+  return COUNTRY_NAME_EN[String(code).toLowerCase()] || code;
+}
+
 // VLOGS uit daphnevlogs_overzicht_v6.xlsx (Vacation_Vlogs + Mixed_Media)
 // VLOGS uit daphnevlogs_overzicht_v6.xlsx
 // VLOGS uit daphnevlogs_overzicht_v6.xlsx
@@ -30,7 +42,7 @@ const GLOBE_PINS = [
 const VLOGS = [
   {
     id: 'vacation-2025-america-pt-1-5',
-    title: 'America pt. 1',
+    title: 'Death Valley, Grand Canyon & Las Vegas',
     countryCode: 'us',
     countryName: 'Verenigde Staten',
     dateRange: '8 May 2025 - 17 May 2024',
@@ -124,7 +136,7 @@ const VLOGS = [
   },
   {
     id: 'vacation-2025-paris-1',
-    title: 'Paris',
+    title: 'Disneyland Paris',
     countryCode: 'fr',
     countryName: 'Frankrijk',
     dateRange: '15-19 August',
@@ -178,7 +190,7 @@ const VLOGS = [
   },
   {
     id: 'vacation-2024-austria-7',
-    title: 'Austria',
+    title: 'Vienna & Linz',
     countryCode: 'at',
     countryName: 'Oostenrijk',
     dateRange: '2 September 2024 - 8 September 2024',
@@ -488,7 +500,7 @@ const VLOGS = [
   },
   {
     id: 'vacation-2023-paris-19',
-    title: 'Paris',
+    title: 'The Egg in Paris',
     countryCode: 'fr',
     countryName: 'Frankrijk',
     dateRange: '12 May 2023 - 15 May 2023',
@@ -638,7 +650,7 @@ const VLOGS = [
   },
   {
     id: 'vacation-2022-paris-22',
-    title: 'Paris',
+    title: 'Paris Anniversary',
     countryCode: 'fr',
     countryName: 'Frankrijk',
     dateRange: '11 April 2022 - 13 April 2022',
@@ -705,7 +717,7 @@ const VLOGS = [
   },
   {
     id: 'vacation-2021-italy-26',
-    title: 'Italy',
+    title: 'Lombardy',
     countryCode: 'it',
     countryName: 'Italië',
     dateRange: '18 July 2021 - 25 July 2021',
@@ -854,7 +866,7 @@ const VLOGS = [
   },
   {
     id: 'vacation-2020-italy-29',
-    title: 'Italy',
+    title: 'Puglia',
     countryCode: 'it',
     countryName: 'Italië',
     dateRange: '3 July 2020 - 10 July 2020',
@@ -935,7 +947,7 @@ const VLOGS = [
   },
   {
     id: 'vacation-2015-austria-33',
-    title: 'Austria',
+    title: 'Stubaier Gletscher',
     countryCode: 'at',
     countryName: 'Oostenrijk',
     dateRange: '2015',
@@ -1149,10 +1161,10 @@ function openInfoModal(vlog) {
   const descriptionEl = infoModal.querySelector('#info-description');
   
   if (titleEl) titleEl.textContent = vlog.title;
-  if (subtitleEl) subtitleEl.textContent = `${vlog.countryName || ''}${vlog.dateRange ? ` · ${vlog.dateRange}` : ''}`;
+  if (subtitleEl) subtitleEl.textContent = `${getCountryNameEn(vlog.countryCode) || vlog.countryName || ''}${vlog.dateRange ? ` · ${vlog.dateRange}` : ''}`;
   if (durationEl) durationEl.textContent = formatDurationToHms(vlog.duration) || '—';
   if (yearEl) yearEl.textContent = vlog.year || '—';
-  if (countryEl) countryEl.textContent = vlog.countryName || '—';
+  if (countryEl) countryEl.textContent = getCountryNameEn(vlog.countryCode) || vlog.countryName || '—';
   if (descriptionEl) {
     descriptionEl.textContent = vlog.description || '';
     descriptionEl.style.display = vlog.description ? '' : 'none';
@@ -1209,6 +1221,33 @@ function getOtherVlogs() {
 
 function getVlogsByCategory(categoryKey) {
   return VLOGS.filter((v) => (v.categories || []).includes(categoryKey));
+}
+
+function parseDurationToMinutes(duration) {
+  if (!duration || duration === '—') return null;
+  const raw = String(duration).trim();
+  const parts = raw.split(':').map((p) => p.trim());
+  if (parts.some((p) => p === '' || Number.isNaN(Number(p)))) return null;
+  let h = 0, m = 0, s = 0;
+  if (parts.length === 3) { h = Number(parts[0]); m = Number(parts[1]); s = Number(parts[2]); }
+  else if (parts.length === 2) { m = Number(parts[0]); s = Number(parts[1]); }
+  else if (parts.length === 1) { s = Number(parts[0]); }
+  else return null;
+  return h * 60 + m + s / 60;
+}
+
+function filterVlogsBySearch(vlogs, { query, years, minDur, maxDur }) {
+  return vlogs.filter((v) => {
+    const q = (query || '').trim().toLowerCase();
+    if (q && !(v.title || '').toLowerCase().includes(q)) return false;
+    if (years && years.length > 0 && !years.includes(v.year)) return false;
+    const dur = parseDurationToMinutes(v.duration);
+    if (dur != null) {
+      if (minDur != null && dur < minDur) return false;
+      if (maxDur != null && dur > maxDur) return false;
+    } else if (minDur != null || maxDur != null) return false;
+    return true;
+  });
 }
 
 function formatDurationToHms(input) {
@@ -1379,7 +1418,7 @@ function renderFeaturedHero() {
   const thumb = youtubeThumbUrl(vlog);
   if (thumb) bg.style.backgroundImage = `url(${thumb})`;
   titleEl.textContent = vlog.title.toUpperCase();
-  metaEl.textContent = `${vlog.countryName} · ${vlog.year}`;
+  metaEl.textContent = `${getCountryNameEn(vlog.countryCode) || vlog.countryName} · ${vlog.year}`;
 
   if (playBtn) {
     playBtn.onclick = () => vlog.url && openPlayer(vlog);
@@ -1441,7 +1480,7 @@ function renderCountryVlogs(countryCode, countryNameFallback) {
   if (!nameEl || !countEl || !listEl) return;
 
   const countryVlogs = VLOGS.filter((v) => v.countryCode === countryCode);
-  const countryName = countryVlogs[0]?.countryName || countryNameFallback || 'Unknown country';
+  const countryName = getCountryNameEn(countryCode) || countryVlogs[0]?.countryName || countryNameFallback || 'Unknown country';
 
   nameEl.textContent = countryName;
   countEl.textContent = `${countryVlogs.length} vlog${countryVlogs.length === 1 ? '' : 's'}`;
@@ -1568,6 +1607,113 @@ function toggleWorldSheet() {
   }
 }
 
+function initSearch() {
+  const overlay = document.getElementById('search-overlay');
+  const openBtn = document.getElementById('search-open-btn');
+  const closeBtn = document.getElementById('search-close-btn');
+  const backdrop = overlay?.querySelector('.search-backdrop');
+  const queryInput = document.getElementById('search-query');
+  const yearsEl = document.getElementById('search-years');
+  const durationMin = document.getElementById('search-duration-min');
+  const durationMax = document.getElementById('search-duration-max');
+  const durationLabel = document.getElementById('search-duration-label');
+  const resultsEl = document.getElementById('search-results');
+
+  if (!overlay || !openBtn || !resultsEl) return;
+
+  const years = [...new Set(VLOGS.map((v) => v.year).filter(Boolean))].sort((a, b) => b - a);
+  let selectedYears = [];
+
+  function openSearch() {
+    overlay.classList.add('is-open');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    queryInput?.focus();
+  }
+
+  function closeSearch() {
+    overlay.classList.remove('is-open');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  function runSearch() {
+    const query = queryInput?.value || '';
+    let minD = Number(durationMin?.value ?? 0);
+    let maxD = Number(durationMax?.value ?? 120);
+    if (minD > maxD) [minD, maxD] = [maxD, minD];
+    const minDur = minD > 0 ? minD : null;
+    const maxDur = maxD < 120 ? maxD : null;
+    const filtered = filterVlogsBySearch(VLOGS, {
+      query,
+      years: selectedYears.length > 0 ? selectedYears : null,
+      minDur,
+      maxDur,
+    });
+    const sorted = [...filtered].sort((a, b) => b.year - a.year);
+
+    if (durationLabel) {
+      durationLabel.textContent = minD === 0 && maxD === 120 ? 'All' : `${minD} – ${maxD} min`;
+    }
+
+    resultsEl.innerHTML = '';
+    if (sorted.length === 0) {
+      resultsEl.innerHTML = '<p class="search-result-empty">No vlogs match your search.</p>';
+      return;
+    }
+    sorted.forEach((vlog) => {
+      const item = document.createElement('article');
+      item.className = 'search-result-item';
+      const thumb = youtubeThumbUrl(vlog);
+      const thumbStyle = thumb ? `background-image:url(${thumb})` : '';
+      item.innerHTML = `
+        <div class="search-result-thumb" style="${thumbStyle}"></div>
+        <div class="search-result-meta">
+          <h4 class="search-result-title">${(vlog.title || '').replace(/</g, '&lt;')}</h4>
+          <p class="search-result-sub">${getCountryNameEn(vlog.countryCode) || vlog.countryName || ''} · ${vlog.year}${vlog.duration ? ` · ${vlog.duration}` : ''}</p>
+        </div>
+      `;
+      item.addEventListener('click', () => {
+        if (vlog.url) {
+          closeSearch();
+          openPlayer(vlog);
+        }
+      });
+      resultsEl.appendChild(item);
+    });
+  }
+
+  years.forEach((y) => {
+    const chip = document.createElement('button');
+    chip.type = 'button';
+    chip.className = 'search-year-chip';
+    chip.textContent = y;
+    chip.addEventListener('click', () => {
+      const idx = selectedYears.indexOf(y);
+      if (idx >= 0) selectedYears.splice(idx, 1);
+      else selectedYears.push(y);
+      selectedYears.sort((a, b) => b - a);
+      chip.classList.toggle('is-active', selectedYears.includes(y));
+      runSearch();
+    });
+    yearsEl?.appendChild(chip);
+  });
+
+  openBtn.addEventListener('click', openSearch);
+  closeBtn?.addEventListener('click', closeSearch);
+  backdrop?.addEventListener('click', closeSearch);
+  queryInput?.addEventListener('input', runSearch);
+  queryInput?.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSearch(); });
+  durationMin?.addEventListener('input', runSearch);
+  durationMax?.addEventListener('input', runSearch);
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeSearch();
+  });
+
+  runSearch();
+}
+
 function initPlayerOverlay() {
   playerOverlay = document.getElementById('player-overlay');
   playerFrame = document.getElementById('player-frame');
@@ -1594,6 +1740,7 @@ function initWorldSheet() {
 
 function initStreamPage() {
   initPlayerOverlay();
+  initSearch();
   initWorldSheet();
   if (document.getElementById('stream-hero')) {
     renderFeaturedHero();
