@@ -1918,8 +1918,7 @@ async function initGlobe() {
     .pointColor(() => GLOBE_CONFIG.landHighlight)
     .pointLabel((d) => d.label || '');
 
-  globeInstance.controls().autoRotate = true;
-  globeInstance.controls().autoRotateSpeed = 0.4;
+  globeInstance.controls().autoRotate = false;
   globeInstance.pointOfView({ lat: 48, lng: 10, altitude: 2.2 }, 0);
 
   // Als er een country-parameter in de URL staat (bijv. vanuit DaphneVlogs),
