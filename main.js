@@ -1267,6 +1267,63 @@ function youtubeEmbedUrl(vlog) {
   return `https://www.youtube.com/embed/${id}?${params.toString()}`;
 }
 
+const youtubeDurationCache = new Map();
+
+function parseIso8601Duration(iso) {
+  if (!iso || typeof iso !== 'string') return null;
+  const m = iso.match(/PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?/i);
+  if (!m) return null;
+  const h = parseInt(m[1] || '0', 10);
+  const min = parseInt(m[2] || '0', 10);
+  const s = parseInt(m[3] || '0', 10);
+  if (h > 0) return `${h}:${String(min).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  if (min > 0 || s > 0) return `${min}:${String(s).padStart(2, '0')}`;
+  return '0:00';
+}
+
+async function fetchYouTubeDurations(videoIds, apiKey) {
+  if (!apiKey || !videoIds.length) return new Map();
+  const ids = [...new Set(videoIds.filter(Boolean))];
+  if (!ids.length) return new Map();
+  const results = new Map();
+  const toFetch = ids.filter((id) => !youtubeDurationCache.has(id));
+  if (!toFetch.length) {
+    ids.forEach((id) => results.set(id, youtubeDurationCache.get(id)));
+    return results;
+  }
+  try {
+    const url = `https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id=${toFetch.join(',')}&key=${apiKey}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    if (!data.items) return new Map();
+    for (const item of data.items) {
+      const vid = item.id;
+      const dur = item.contentDetails?.duration;
+      const parsed = parseIso8601Duration(dur);
+      if (parsed) {
+        youtubeDurationCache.set(vid, parsed);
+        results.set(vid, parsed);
+      }
+    }
+  } catch (e) {
+    console.warn('YouTube duration fetch failed:', e);
+  }
+  ids.forEach((id) => {
+    if (youtubeDurationCache.has(id) && !results.has(id)) results.set(id, youtubeDurationCache.get(id));
+  });
+  return results;
+}
+
+let youtubeApiKeyPromise = null;
+async function getYoutubeApiKey() {
+  if (youtubeApiKeyPromise) return youtubeApiKeyPromise;
+  youtubeApiKeyPromise = fetch('scripts/config.json')
+    .then((r) => (r.ok ? r.json() : {}))
+    .then((c) => c.youtube_api_key || null)
+    .catch(() => null);
+  return youtubeApiKeyPromise;
+}
+
 function updateGlobeHighlight() {
   if (!globeInstance || !countriesData) return;
   globeInstance
@@ -1466,8 +1523,8 @@ function getFeaturedVlog() {
   return sorted[0] || null;
 }
 
-function getRecommendedVlogs() {
-  const withUrl = VLOGS.filter((v) => v?.url);
+function getSuggestedVlogs() {
+  const withUrl = VLOGS.filter((v) => v?.url && !(v.categories || []).includes('funeral'));
   const shuffled = [...withUrl].sort(() => Math.random() - 0.5);
   return shuffled.slice(0, 10);
 }
@@ -1721,13 +1778,13 @@ function renderMyList() {
   if (!container) return;
   container.innerHTML = '';
 
-  const recommended = getRecommendedVlogs();
-  if (recommended.length === 0) {
+  const suggested = getSuggestedVlogs();
+  if (suggested.length === 0) {
     container.innerHTML = '<p class="mylist-empty">No vlogs.</p>';
     return;
   }
 
-  recommended.forEach((vlog) => {
+  suggested.forEach((vlog) => {
     const card = document.createElement('article');
     card.className = 'mylist-poster';
     const thumb = youtubeThumbUrl(vlog);
@@ -1958,18 +2015,25 @@ function initSearch() {
       resultsEl.innerHTML = '<p class="search-result-empty">No vlogs match your search.</p>';
       return;
     }
+    const vlogsNeedingDuration = [];
     sorted.forEach((vlog) => {
       const item = document.createElement('article');
       item.className = 'search-result-item';
       const thumb = youtubeThumbUrl(vlog);
       const thumbStyle = thumb ? `background-image:url(${thumb})` : '';
+      const vid = youtubeVideoId(vlog);
+      const hasDuration = vlog.duration && vlog.duration !== '—';
+      const displayDuration = hasDuration ? formatDurationToHms(vlog.duration) : (vid ? youtubeDurationCache.get(vid) || '—' : '—');
+      const subText = `${getCountryNameEn(vlog.countryCode) || vlog.countryName || ''} · ${vlog.year} · ${displayDuration}`;
       item.innerHTML = `
         <div class="search-result-thumb" style="${thumbStyle}"></div>
         <div class="search-result-meta">
           <h4 class="search-result-title">${(vlog.title || '').replace(/</g, '&lt;')}</h4>
-          <p class="search-result-sub">${getCountryNameEn(vlog.countryCode) || vlog.countryName || ''} · ${vlog.year}${vlog.duration ? ` · ${vlog.duration}` : ''}</p>
+          <p class="search-result-sub">${subText}</p>
         </div>
       `;
+      const subEl = item.querySelector('.search-result-sub');
+      if (vid && !hasDuration) vlogsNeedingDuration.push({ vid, subEl, vlog });
       item.addEventListener('click', () => {
         if (vlog.url) {
           closeSearch();
@@ -1978,6 +2042,19 @@ function initSearch() {
       });
       resultsEl.appendChild(item);
     });
+    if (vlogsNeedingDuration.length > 0) {
+      const ids = vlogsNeedingDuration.map((x) => x.vid);
+      getYoutubeApiKey().then((apiKey) => fetchYouTubeDurations(ids, apiKey)).then((durations) => {
+        vlogsNeedingDuration.forEach(({ vid, subEl, vlog }) => {
+          if (!subEl) return;
+          const dur = durations.get(vid);
+          if (dur) {
+            const base = `${getCountryNameEn(vlog.countryCode) || vlog.countryName || ''} · ${vlog.year}`;
+            subEl.textContent = `${base} · ${formatDurationToHms(dur) || dur}`;
+          }
+        });
+      });
+    }
   }
 
   years.forEach((y) => {
