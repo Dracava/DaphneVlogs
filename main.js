@@ -18,6 +18,11 @@ const GLOBE_CONFIG = {
 
 const GEOJSON_URL = 'https://cdn.jsdelivr.net/gh/nvkelso/natural-earth-vector@master/geojson/ne_110m_admin_0_countries.geojson';
 
+// Pins op de wereldbol (plaatsnaam, lat, lng)
+const GLOBE_PINS = [
+  { lat: 52.52, lng: 13.405, label: 'Berlijn', size: 0.4 },
+];
+
 // VLOGS uit daphnevlogs_overzicht_v6.xlsx (Vacation_Vlogs + Mixed_Media)
 // VLOGS uit daphnevlogs_overzicht_v6.xlsx
 // VLOGS uit daphnevlogs_overzicht_v6.xlsx
@@ -151,7 +156,7 @@ const VLOGS = [
     countryName: 'Nederland',
     dateRange: '2024',
     duration: '—',
-    url: '',
+    url: 'https://youtu.be/vIHnslrvkpc?si=g9RbO0Y94zLQMmQC',
     year: 2024,
     isPopular: false,
     isFavorite: false,
@@ -1522,7 +1527,14 @@ async function initGlobe() {
           return hasVlogs(code) ? GLOBE_CONFIG.landWithVlogs : GLOBE_CONFIG.landColor;
         });
     })
-    .polygonsTransitionDuration(300);
+    .polygonsTransitionDuration(300)
+    .pointsData(GLOBE_PINS)
+    .pointLat('lat')
+    .pointLng('lng')
+    .pointAltitude(0.02)
+    .pointRadius((d) => (d.size || 0.3) * 0.008)
+    .pointColor(() => GLOBE_CONFIG.landHighlight)
+    .pointLabel((d) => d.label || '');
 
   globeInstance.controls().autoRotate = true;
   globeInstance.controls().autoRotateSpeed = 0.4;
