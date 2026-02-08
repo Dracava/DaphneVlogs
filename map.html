@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="nl">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +13,7 @@
 <body class="page-map">
   <div class="app">
     <header class="topbar-stream">
-      <nav class="topbar-nav" aria-label="Hoofdnavigatie">
+      <nav class="topbar-nav" aria-label="Main navigation">
         <a href="index.html" class="topbar-logo" aria-label="DaphneVlogs home">
           <img src="images/Logo DV.png" alt="DaphneVlogs logo">
         </a>
@@ -21,15 +21,15 @@
         <a href="map.html" class="topbar-link is-active">Map</a>
       </nav>
       <div class="topbar-right">
-        <button type="button" class="btn-icon topbar-icon" aria-label="Meldingen">
+        <button type="button" class="btn-icon topbar-icon" aria-label="Notifications">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
         </button>
-        <a href="index.html" class="topbar-avatar" aria-label="Profiel">DV</a>
+        <a href="index.html" class="topbar-avatar" aria-label="Profile">DV</a>
       </div>
     </header>
 
     <main class="main">
-      <section class="world-section world-section--full" aria-label="Vlogs per land">
+      <section class="world-section world-section--full" aria-label="Vlogs by country">
         <div class="world-layout">
           <div id="globe-container"></div>
           <!-- Dashboard met vlogs rechts (desktop) / onderin (mobile) -->
@@ -38,14 +38,14 @@
             <div class="world-sheet-inner">
               <div class="world-vlogs-header">
                 <div>
-                  <span class="world-vlogs-label">Land</span>
-                  <h3 id="world-country-name" class="world-country-name">Nog geen land gekozen</h3>
+                  <span class="world-vlogs-label">Country</span>
+                  <h3 id="world-country-name" class="world-country-name">No country selected</h3>
                 </div>
                 <span id="world-country-count" class="world-country-count">0 vlogs</span>
               </div>
 
               <div id="country-vlog-list" class="country-vlog-list">
-                <p class="world-empty">Klik op een land op de wereldbol om vlogs te ontdekken.</p>
+                <p class="world-empty">Click on a country on the globe to discover vlogs.</p>
               </div>
             </div>
           </aside>
@@ -56,7 +56,7 @@
     <!-- YouTube player overlay (gedeeld met DaphneVlogs) -->
     <div id="player-overlay" class="player-overlay" aria-hidden="true">
       <div class="player-dialog" role="dialog" aria-modal="true" aria-labelledby="player-title">
-        <button type="button" class="btn-icon player-close" id="player-close" aria-label="Sluiten">
+        <button type="button" class="btn-icon player-close" id="player-close" aria-label="Close">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M18 6L6 18M6 6l12 12"/>
           </svg>

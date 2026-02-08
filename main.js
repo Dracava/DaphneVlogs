@@ -18,9 +18,9 @@ const GLOBE_CONFIG = {
 
 const GEOJSON_URL = 'https://cdn.jsdelivr.net/gh/nvkelso/natural-earth-vector@master/geojson/ne_110m_admin_0_countries.geojson';
 
-// Pins op de wereldbol (plaatsnaam, lat, lng)
+// Pins on the globe (place name, lat, lng)
 const GLOBE_PINS = [
-  { lat: 52.52, lng: 13.405, label: 'Berlijn', size: 0.4 },
+  { lat: 52.52, lng: 13.405, label: 'Berlin', size: 0.4 },
 ];
 
 // VLOGS uit daphnevlogs_overzicht_v6.xlsx (Vacation_Vlogs + Mixed_Media)
@@ -1071,7 +1071,7 @@ function openInfoModal(vlog) {
     infoModal.innerHTML = `
       <div class="info-modal-backdrop"></div>
       <div class="info-modal-content">
-        <button type="button" class="info-modal-close" aria-label="Sluiten">
+        <button type="button" class="info-modal-close" aria-label="Close">
           <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M18 6L6 18M6 6l12 12"/>
           </svg>
@@ -1086,21 +1086,21 @@ function openInfoModal(vlog) {
               <svg class="info-modal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
               </svg>
-              <span class="info-modal-meta-label">Duur</span>
+              <span class="info-modal-meta-label">Duration</span>
               <span class="info-modal-meta-value" id="info-duration"></span>
             </div>
             <div class="info-modal-meta-item">
               <svg class="info-modal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
               </svg>
-              <span class="info-modal-meta-label">Jaar</span>
+              <span class="info-modal-meta-label">Year</span>
               <span class="info-modal-meta-value" id="info-year"></span>
             </div>
             <div class="info-modal-meta-item">
               <svg class="info-modal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
               </svg>
-              <span class="info-modal-meta-label">Land</span>
+              <span class="info-modal-meta-label">Country</span>
               <span class="info-modal-meta-value" id="info-country"></span>
             </div>
           </div>
@@ -1108,7 +1108,7 @@ function openInfoModal(vlog) {
           <div class="info-modal-actions">
             <button type="button" class="info-modal-play-btn" id="info-play-btn">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-              Afspelen
+              Play
             </button>
           </div>
         </div>
@@ -1177,7 +1177,7 @@ function selectCountryByCode(iso2) {
     (feat) => getCountryCode(feat) === iso2.toLowerCase()
   );
   if (!match) {
-    renderCountryVlogs(iso2.toLowerCase(), 'Onbekend land');
+    renderCountryVlogs(iso2.toLowerCase(), 'Unknown country');
     return;
   }
   selectedCountry = match;
@@ -1263,10 +1263,10 @@ function vlogHoverCardHtml({ thumb, indexLabel, title, duration, year }) {
       </div>
       <div class="vlog-hover-panel">
         <div class="vlog-hover-actions">
-          <button type="button" class="poster-hover-play" aria-label="Afspelen">
+          <button type="button" class="poster-hover-play" aria-label="Play">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
           </button>
-          <button type="button" class="poster-hover-info" aria-label="Meer informatie">
+          <button type="button" class="poster-hover-info" aria-label="More info">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"></path>
             </svg>
@@ -1309,7 +1309,7 @@ function vlogMetaHtml({ title, duration, year }) {
         </div>
         <div class="vlog-hover-title">${safeTitle}</div>
       </div>
-      <button type="button" class="vlog-meta-play" aria-label="Afspelen">
+      <button type="button" class="vlog-meta-play" aria-label="Play">
         <svg viewBox="0 0 24 24" fill="currentColor">
           <path d="M8 5v14l11-7z"></path>
         </svg>
@@ -1325,7 +1325,7 @@ function renderCategoryRow(containerId, categoryKey, usePortrait = false) {
 
   const list = getVlogsByCategory(categoryKey);
   if (list.length === 0) {
-    container.innerHTML = '<p class="stream-row-empty">Nog geen vlogs in deze categorie.</p>';
+    container.innerHTML = '<p class="stream-row-empty">No vlogs in this category yet.</p>';
     return;
   }
 
@@ -1371,7 +1371,7 @@ function renderFeaturedHero() {
 
   const vlog = getFeaturedVlog();
   if (!vlog) {
-    titleEl.textContent = 'Geen vlogs';
+    titleEl.textContent = 'No vlogs';
     metaEl.textContent = '';
     return;
   }
@@ -1400,7 +1400,7 @@ function renderMyList() {
 
   const others = getOtherVlogs();
   if (others.length === 0) {
-    container.innerHTML = '<p class="mylist-empty">Geen andere vlogs.</p>';
+    container.innerHTML = '<p class="mylist-empty">No other vlogs.</p>';
     return;
   }
 
@@ -1441,7 +1441,7 @@ function renderCountryVlogs(countryCode, countryNameFallback) {
   if (!nameEl || !countEl || !listEl) return;
 
   const countryVlogs = VLOGS.filter((v) => v.countryCode === countryCode);
-  const countryName = countryVlogs[0]?.countryName || countryNameFallback || 'Onbekend land';
+  const countryName = countryVlogs[0]?.countryName || countryNameFallback || 'Unknown country';
 
   nameEl.textContent = countryName;
   countEl.textContent = `${countryVlogs.length} vlog${countryVlogs.length === 1 ? '' : 's'}`;
@@ -1449,7 +1449,7 @@ function renderCountryVlogs(countryCode, countryNameFallback) {
   listEl.innerHTML = '';
 
   if (!countryVlogs.length) {
-    listEl.innerHTML = `<p class="world-empty">Nog geen vlogs voor ${countryName} – maar dat komt vast nog ✨</p>`;
+    listEl.innerHTML = `<p class="world-empty">No vlogs for ${countryName} yet – coming soon ✨</p>`;
     return;
   }
 
@@ -1458,9 +1458,11 @@ function renderCountryVlogs(countryCode, countryNameFallback) {
   sorted.forEach((vlog) => {
     const item = document.createElement('article');
     item.className = 'country-vlog-card';
+    const thumb = youtubeThumbUrl(vlog);
+    const thumbStyle = thumb ? `background-image:url(${thumb});background-size:cover;background-position:center` : '';
 
     item.innerHTML = `
-      <div class="country-vlog-thumb"></div>
+      <div class="country-vlog-thumb" style="${thumbStyle}"></div>
       <div class="country-vlog-meta">
         <h4 class="country-vlog-title">${vlog.title}</h4>
         <p class="country-vlog-sub">${vlog.dateRange || vlog.year}</p>
@@ -1504,7 +1506,7 @@ async function initGlobe() {
     .polygonSideColor(() => GLOBE_CONFIG.sideColor)
     .polygonStrokeColor(() => GLOBE_CONFIG.strokeColor)
     .polygonAltitude(GLOBE_CONFIG.polygonAltitude)
-    .polygonLabel(({ properties: p }) => (p ? `${p.ADMIN || p.name} (${p.ISO_A2 || ''})` : ''))
+    .polygonLabel(({ properties: p }) => (p ? (p.ADMIN || p.name || '') : ''))
     .onPolygonClick((d) => {
       if (!d) return;
       selectedCountry = d;
@@ -1602,12 +1604,12 @@ function initStreamPage() {
     renderCategoryRow('stream-events', 'event');
   }
   initGlobe().catch((err) => {
-  console.error('Globe initialisatie mislukt:', err);
+  console.error('Globe initialization failed:', err);
   document.getElementById('globe-container').innerHTML = `
     <div style="display:flex;align-items:center;justify-content:center;height:100%;color:#94a3b8;font-family:sans-serif;text-align:center;padding:1rem;">
       <div>
-        <p>De wereldbol kon niet worden geladen.</p>
-        <p style="font-size:0.875rem;margin-top:0.5rem;">Controleer je internetverbinding en probeer de pagina te herladen.</p>
+        <p>The globe could not be loaded.</p>
+        <p style="font-size:0.875rem;margin-top:0.5rem;">Check your internet connection and try reloading the page.</p>
       </div>
     </div>
   `;
