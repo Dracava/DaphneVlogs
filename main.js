@@ -23,16 +23,67 @@ const GLOBE_PINS = [
   { lat: 52.52, lng: 13.405, label: 'Berlin', size: 0.4 },
 ];
 
-// Country codes to English names (for display)
+// ISO 2-letter to full English name (Natural Earth sometimes uses -99 for ISO_A2)
 const COUNTRY_NAME_EN = {
-  at: 'Austria', be: 'Belgium', bg: 'Bulgaria', de: 'Germany', es: 'Spain', fr: 'France',
-  gb: 'United Kingdom', hr: 'Croatia', hu: 'Hungary', id: 'Indonesia', it: 'Italy',
-  nl: 'Netherlands', ro: 'Romania', sg: 'Singapore', us: 'United States',
+  ad: 'Andorra', ae: 'United Arab Emirates', af: 'Afghanistan', ag: 'Antigua and Barbuda',
+  al: 'Albania', am: 'Armenia', ao: 'Angola', ar: 'Argentina', at: 'Austria', au: 'Australia',
+  az: 'Azerbaijan', ba: 'Bosnia and Herzegovina', bb: 'Barbados', bd: 'Bangladesh',
+  be: 'Belgium', bf: 'Burkina Faso', bg: 'Bulgaria', bh: 'Bahrain', bi: 'Burundi',
+  bj: 'Benin', bn: 'Brunei', bo: 'Bolivia', br: 'Brazil', bs: 'Bahamas', bt: 'Bhutan',
+  bw: 'Botswana', by: 'Belarus', bz: 'Belize', ca: 'Canada', cf: 'Central African Republic',
+  cg: 'Republic of the Congo', ch: 'Switzerland', ci: 'Ivory Coast', cl: 'Chile',
+  cm: 'Cameroon', cn: 'China', co: 'Colombia', cr: 'Costa Rica', cu: 'Cuba',
+  cv: 'Cape Verde', cy: 'Cyprus', cz: 'Czech Republic', de: 'Germany', dj: 'Djibouti',
+  dk: 'Denmark', do: 'Dominican Republic', dz: 'Algeria', ec: 'Ecuador', ee: 'Estonia',
+  eg: 'Egypt', er: 'Eritrea', es: 'Spain', et: 'Ethiopia', fi: 'Finland', fj: 'Fiji',
+  fr: 'France', ga: 'Gabon', gb: 'United Kingdom', ge: 'Georgia', gf: 'French Guiana',
+  gh: 'Ghana', gm: 'Gambia', gn: 'Guinea', gq: 'Equatorial Guinea', gr: 'Greece',
+  gt: 'Guatemala', gw: 'Guinea-Bissau', gy: 'Guyana', hn: 'Honduras', hr: 'Croatia',
+  ht: 'Haiti', hu: 'Hungary', id: 'Indonesia', ie: 'Ireland', il: 'Israel', in: 'India',
+  iq: 'Iraq', ir: 'Iran', is: 'Iceland', it: 'Italy', jm: 'Jamaica', jo: 'Jordan',
+  jp: 'Japan', ke: 'Kenya', kg: 'Kyrgyzstan', kh: 'Cambodia', ki: 'Kiribati', km: 'Comoros',
+  kn: 'Saint Kitts and Nevis', kp: 'North Korea', kr: 'South Korea', kw: 'Kuwait',
+  kz: 'Kazakhstan', la: 'Laos', lb: 'Lebanon', lc: 'Saint Lucia', li: 'Liechtenstein',
+  lk: 'Sri Lanka', lr: 'Liberia', ls: 'Lesotho', lt: 'Lithuania', lu: 'Luxembourg',
+  lv: 'Latvia', ly: 'Libya', ma: 'Morocco', mc: 'Monaco', md: 'Moldova', me: 'Montenegro',
+  mg: 'Madagascar', mh: 'Marshall Islands', mk: 'North Macedonia', ml: 'Mali', mm: 'Myanmar',
+  mn: 'Mongolia', mr: 'Mauritania', mt: 'Malta', mu: 'Mauritius', mv: 'Maldives',
+  mw: 'Malawi', mx: 'Mexico', my: 'Malaysia', mz: 'Mozambique', na: 'Namibia',
+  ne: 'Niger', ng: 'Nigeria', ni: 'Nicaragua', nl: 'Netherlands', no: 'Norway',
+  np: 'Nepal', nr: 'Nauru', nz: 'New Zealand', om: 'Oman', pa: 'Panama', pe: 'Peru',
+  pg: 'Papua New Guinea', ph: 'Philippines', pk: 'Pakistan', pl: 'Poland', pt: 'Portugal',
+  pw: 'Palau', py: 'Paraguay', qa: 'Qatar', ro: 'Romania', rs: 'Serbia', ru: 'Russia',
+  rw: 'Rwanda', sa: 'Saudi Arabia', sb: 'Solomon Islands', sc: 'Seychelles', sd: 'Sudan',
+  se: 'Sweden', sg: 'Singapore', si: 'Slovenia', sk: 'Slovakia', sl: 'Sierra Leone',
+  sm: 'San Marino', sn: 'Senegal', so: 'Somalia', sr: 'Suriname', ss: 'South Sudan',
+  st: 'São Tomé and Príncipe', sv: 'El Salvador', sy: 'Syria', sz: 'Eswatini',
+  td: 'Chad', tg: 'Togo', th: 'Thailand', tj: 'Tajikistan', tl: 'Timor-Leste', tm: 'Turkmenistan',
+  tn: 'Tunisia', to: 'Tonga', tr: 'Turkey', tt: 'Trinidad and Tobago', tw: 'Taiwan',
+  tz: 'Tanzania', ua: 'Ukraine', ug: 'Uganda', us: 'United States', uy: 'Uruguay',
+  uz: 'Uzbekistan', va: 'Vatican City', vc: 'Saint Vincent and the Grenadines',
+  ve: 'Venezuela', vn: 'Vietnam', vu: 'Vanuatu', ws: 'Samoa', ye: 'Yemen', za: 'South Africa',
+  zm: 'Zambia', zw: 'Zimbabwe',
+};
+
+// ADM0_A3 (ISO 3) to ISO 2 when Natural Earth has ISO_A2 = -99
+const ADM0_A3_TO_ISO2 = {
+  FRA: 'fr', CAN: 'ca', AUS: 'au', NOR: 'no', JPN: 'jp', CHN: 'cn', IND: 'in',
+  USA: 'us', GBR: 'gb', DEU: 'de', ITA: 'it', ESP: 'es', NLD: 'nl', BEL: 'be',
+  CHE: 'ch', AUT: 'at', SWE: 'se', DNK: 'dk', FIN: 'fi', PRT: 'pt', GRC: 'gr',
+  POL: 'pl', CZE: 'cz', ROU: 'ro', HUN: 'hu', BGR: 'bg', HRV: 'hr', SVN: 'si',
+  SVK: 'sk', IRL: 'ie', LVA: 'lv', LTU: 'lt', EST: 'ee', RUS: 'ru', UKR: 'ua',
+  BLR: 'by', MKD: 'mk', ALB: 'al', BIH: 'ba', SRB: 'rs', MNE: 'me', XKX: 'xk',
+  BRA: 'br', ARG: 'ar', CHL: 'cl', COL: 'co', PER: 'pe', MEX: 'mx', CUB: 'cu',
+  IDN: 'id', MYS: 'my', THA: 'th', VNM: 'vn', PHL: 'ph', SGP: 'sg', ZAF: 'za',
+  NGA: 'ng', KEN: 'ke', EGY: 'eg', MAR: 'ma', TUR: 'tr', IRN: 'ir', SAU: 'sa',
+  ISR: 'il', JOR: 'jo', LBN: 'lb', NZL: 'nz', FJI: 'fj',
 };
 
 function getCountryNameEn(code) {
   if (!code) return '';
-  return COUNTRY_NAME_EN[String(code).toLowerCase()] || code;
+  const c = String(code).toLowerCase();
+  if (c === '-99') return '';
+  return COUNTRY_NAME_EN[c] || COUNTRY_NAME_EN[ADM0_A3_TO_ISO2[code?.toUpperCase()]] || '';
 }
 
 // VLOGS uit daphnevlogs_overzicht_v6.xlsx (Vacation_Vlogs + Mixed_Media)
@@ -983,11 +1034,17 @@ function hasVlogs(countryCode) {
 function getCountryCode(feature) {
   const p = feature?.properties;
   if (!p) return null;
-  return (p.ISO_A2 || p.ADM0_A3 || '').toLowerCase();
+  const iso2 = (p.ISO_A2 || '').toString().toLowerCase();
+  if (iso2 === '-99' || iso2 === '' || iso2.length !== 2) {
+    const mapped = ADM0_A3_TO_ISO2[(p.ADM0_A3 || '').toUpperCase()];
+    return mapped ? mapped.toLowerCase() : null;
+  }
+  return iso2;
 }
 
 function getCountryName(feature) {
-  return feature?.properties?.ADMIN ?? feature?.properties?.name ?? 'Onbekend';
+  const p = feature?.properties;
+  return (p?.NAME_EN || p?.ADMIN || p?.name) ?? 'Unknown';
 }
 
 function youtubeVideoId(vlog) {
@@ -1479,7 +1536,7 @@ function renderCountryVlogs(countryCode, countryNameFallback) {
   const listEl = document.getElementById('country-vlog-list');
   if (!nameEl || !countEl || !listEl) return;
 
-  const countryVlogs = VLOGS.filter((v) => v.countryCode === countryCode);
+  const countryVlogs = VLOGS.filter((v) => (v.countryCode || '').toLowerCase() === (countryCode || '').toLowerCase());
   const countryName = getCountryNameEn(countryCode) || countryVlogs[0]?.countryName || countryNameFallback || 'Unknown country';
 
   nameEl.textContent = countryName;
@@ -1616,6 +1673,7 @@ function initSearch() {
   const yearsEl = document.getElementById('search-years');
   const durationMin = document.getElementById('search-duration-min');
   const durationMax = document.getElementById('search-duration-max');
+  const durationFill = document.getElementById('search-duration-fill');
   const durationLabel = document.getElementById('search-duration-label');
   const resultsEl = document.getElementById('search-results');
 
@@ -1623,6 +1681,18 @@ function initSearch() {
 
   const years = [...new Set(VLOGS.map((v) => v.year).filter(Boolean))].sort((a, b) => b - a);
   let selectedYears = [];
+
+  function updateDurationFill() {
+    const minVal = Number(durationMin?.value ?? 0);
+    const maxVal = Number(durationMax?.value ?? 120);
+    const range = 120;
+    const left = (minVal / range) * 100;
+    const width = ((maxVal - minVal) / range) * 100;
+    if (durationFill) {
+      durationFill.style.left = `${left}%`;
+      durationFill.style.width = `${width}%`;
+    }
+  }
 
   function openSearch() {
     overlay.classList.add('is-open');
@@ -1704,8 +1774,22 @@ function initSearch() {
   backdrop?.addEventListener('click', closeSearch);
   queryInput?.addEventListener('input', runSearch);
   queryInput?.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSearch(); });
-  durationMin?.addEventListener('input', runSearch);
-  durationMax?.addEventListener('input', runSearch);
+  durationMin?.addEventListener('input', () => {
+    const minVal = Number(durationMin?.value ?? 0);
+    const maxVal = Number(durationMax?.value ?? 120);
+    if (minVal > maxVal && durationMax) durationMax.value = minVal;
+    updateDurationFill();
+    runSearch();
+  });
+  durationMax?.addEventListener('input', () => {
+    const minVal = Number(durationMin?.value ?? 0);
+    const maxVal = Number(durationMax?.value ?? 120);
+    if (maxVal < minVal && durationMin) durationMin.value = maxVal;
+    updateDurationFill();
+    runSearch();
+  });
+
+  updateDurationFill();
 
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeSearch();

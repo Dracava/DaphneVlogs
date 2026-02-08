@@ -98,8 +98,11 @@
           <div class="search-filter-group">
             <label class="search-filter-label">Duration (min)</label>
             <div class="search-duration">
-              <input type="range" id="search-duration-min" class="search-range" min="0" max="120" value="0" step="1">
-              <input type="range" id="search-duration-max" class="search-range" min="0" max="120" value="120" step="1">
+              <div class="search-range-track">
+                <div class="search-range-fill" id="search-duration-fill"></div>
+                <input type="range" id="search-duration-min" class="search-range" min="0" max="120" value="0" step="1" aria-label="Minimum duration">
+                <input type="range" id="search-duration-max" class="search-range" min="0" max="120" value="120" step="1" aria-label="Maximum duration">
+              </div>
               <span id="search-duration-label" class="search-duration-label">0 – 120 min</span>
             </div>
           </div>
