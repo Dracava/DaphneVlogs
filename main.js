@@ -107,7 +107,7 @@ const VLOGS = [
   },
   {
     id: 'mixed-2026-new-years-eve',
-    title: 'New Years Eve 2025-2026',
+    title: 'New Years Eve',
     countryCode: 'nl',
     countryName: 'Nederland',
     dateRange: '31 December 2025',
@@ -238,6 +238,7 @@ const VLOGS = [
     year: 2025,
     isPopular: false,
     isFavorite: false,
+    categories: ['citytrip'],
     description: 'A weekend in Haarlem with Jolijn, filled with shopping sprees and indulging in the best Social Deals.'
   },
   {
@@ -392,7 +393,7 @@ const VLOGS = [
   },
   {
     id: 'mixed-2024-friendmas-2024-6',
-    title: 'Friendmas 2024',
+    title: 'Friendmas',
     countryCode: 'nl',
     countryName: 'Nederland',
     dateRange: '2024',
@@ -406,7 +407,7 @@ const VLOGS = [
   },
   {
     id: 'mixed-2024-graduation-vlog-alex-9',
-    title: 'Graduation vlog Alex',
+    title: 'Graduation Alex',
     countryCode: 'nl',
     countryName: 'Nederland',
     dateRange: '2024',
@@ -420,7 +421,7 @@ const VLOGS = [
   },
   {
     id: 'mixed-2024-graduation-vlog-jurriaan-5',
-    title: 'Graduation vlog Jurriaan',
+    title: 'Graduation Jurriaan',
     countryCode: 'nl',
     countryName: 'Nederland',
     dateRange: '2024',
@@ -1056,6 +1057,7 @@ const VLOGS = [
     year: 2021,
     isPopular: false,
     isFavorite: false,
+    categories: ['citytrip'],
     description: 'Visiting Utrecht with Aleks and Ines.'
   },
   {
@@ -1069,6 +1071,7 @@ const VLOGS = [
     year: 2021,
     isPopular: false,
     isFavorite: false,
+    categories: ['citytrip'],
     description: 'Jolijn and Daphne are doing stupid stuff in Noord-Holland.'
   },
   {
@@ -1214,6 +1217,7 @@ let playerOverlay = null;
 let playerFrame = null;
 let playerTitle = null;
 let worldSheet = null;
+let worldSheetDrag = null;
 let countriesWithVlogs = null;
 
 function getCountriesWithVlogs() {
@@ -2171,9 +2175,61 @@ function initWorldSheet() {
   worldSheet = document.getElementById('world-sheet');
   const handle = document.getElementById('world-sheet-handle');
   if (!worldSheet) return;
+
   if (handle) {
+    // Desktop: klik om open/dicht te klappen
     handle.addEventListener('click', toggleWorldSheet);
+
+    // Mobile: sheet met de hand omhoog/omlaag slepen
+    handle.addEventListener('touchstart', (e) => {
+      if (!worldSheet || !worldSheet.classList.contains('is-open')) return;
+      // Alleen op kleinere schermen dragged sheet gebruiken
+      if (!window.matchMedia || !window.matchMedia('(max-width: 767px)').matches) return;
+      const touch = e.touches && e.touches[0];
+      if (!touch) return;
+      e.preventDefault();
+      worldSheetDrag = {
+        active: true,
+        startY: touch.clientY,
+        currentTranslate: 0,
+      };
+      worldSheet.classList.add('world-sheet--dragging');
+    }, { passive: false });
   }
+
+  function onWorldSheetTouchMove(e) {
+    if (!worldSheetDrag || !worldSheetDrag.active || !worldSheet) return;
+    const touch = e.touches && e.touches[0];
+    if (!touch) return;
+    const deltaY = touch.clientY - worldSheetDrag.startY;
+    const vh = window.innerHeight || 1;
+    let translate = (deltaY / vh) * 100; // van 0% (open) naar max 110% (dicht)
+    if (translate < 0) translate = 0;
+    if (translate > 110) translate = 110;
+    worldSheetDrag.currentTranslate = translate;
+    worldSheet.style.transform = `translateY(${translate}%)`;
+    e.preventDefault();
+  }
+
+  function onWorldSheetTouchEnd() {
+    if (!worldSheetDrag || !worldSheetDrag.active || !worldSheet) return;
+    const translate = worldSheetDrag.currentTranslate || 0;
+    worldSheet.classList.remove('world-sheet--dragging');
+    worldSheet.style.transform = '';
+    worldSheetDrag = null;
+
+    // Bij meer dan ~40% naar beneden: sluiten, anders open laten
+    if (translate > 40) {
+      worldSheet.classList.remove('is-open');
+      worldSheet.setAttribute('aria-hidden', 'true');
+    } else {
+      openWorldSheet();
+    }
+  }
+
+  document.addEventListener('touchmove', onWorldSheetTouchMove, { passive: false });
+  document.addEventListener('touchend', onWorldSheetTouchEnd);
+  document.addEventListener('touchcancel', onWorldSheetTouchEnd);
 }
 
 function initStreamPage() {

@@ -1194,6 +1194,10 @@ body {
     opacity 0.4s ease-out;
 }
 
+.world-sheet--dragging {
+  transition: none !important;
+}
+
 .world-sheet.is-open {
   transform: translateY(0);
   opacity: 1;
