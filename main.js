@@ -827,6 +827,19 @@ const VLOGS = [
     description: 'Day trip to Amsterdam to celebrate our second year anniversary.'
   },
   {
+    id: 'vacation-2022-bulgaria-24',
+    title: 'Bulgaria',
+    countryCode: 'bg',
+    countryName: 'Bulgarije',
+    dateRange: '14 August 2022 - 29 August 2022',
+    duration: '—',
+    url: 'https://youtu.be/Zbt_7kTFh_I?si=F8_9j5tDib9RNm84',
+    year: 2022,
+    isPopular: false,
+    isFavorite: false,
+    description: ''
+  },
+  {
     id: 'mixed-2022-amsterdam-light-festival-24',
     title: 'Amsterdam Light Festival',
     countryCode: 'nl',
@@ -957,7 +970,7 @@ const VLOGS = [
     countryName: 'Bulgarije',
     dateRange: '2 August 2021 - 16 August 2021',
     duration: '25:23',
-    url: 'https://youtu.be/Zbt_7kTFh_I?si=2e6v6SCMSCF_dz0U',
+    url: 'https://youtu.be/QcvXcszgz7o?si=uQD6pFitydB4iORU',
     year: 2021,
     isPopular: false,
     isFavorite: false,
