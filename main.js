@@ -384,15 +384,15 @@ const VLOGS = [
     description: 'Easter vacation with my mother and brother to warm and lovely Budapest, Hungary.'
   },
   {
-    id: 'vacation-2024-poland-ukraine-9',
+    id: 'vacation-2026-poland-ukraine-9',
     title: 'Poland & Ukraine',
     countryCode: 'pl',
     countryCodes: ['pl', 'ua'],
     countryName: 'Poland & Ukraine',
-    dateRange: '',
+    dateRange: '11 January 2026 - 19 January 2026',
     duration: '32:57',
     url: 'https://youtu.be/pSojy2YX64M?si=rQcb5lF7ZYfzkKP0',
-    year: 2024,
+    year: 2026,
     isPopular: false,
     isFavorite: false,
     description: ''
