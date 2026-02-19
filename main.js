@@ -1570,11 +1570,31 @@ function getSuggestedVlogs() {
   return shuffled.slice(0, 10);
 }
 
-function getVlogsByCategory(categoryKey) {
-  if (categoryKey === 'vacation') {
-    return VLOGS.filter((v) => (v.id || '').startsWith('vacation-') && !(v.categories || []).includes('citytrip'));
+const MONTH_NAMES = ['january','february','march','april','may','june','july','august','september','october','november','december'];
+
+function vlogSortKey(v) {
+  const y = v.year || 0;
+  const dr = (v.dateRange || '').split(' - ')[0].trim();
+  if (!dr) return y * 10000;
+  const parts = dr.match(/(\d{1,2})\s+(\w+)\s+(\d{4})/i) || dr.match(/(\d{4})/);
+  if (parts && parts.length >= 4) {
+    const day = parseInt(parts[1], 10) || 1;
+    const mon = MONTH_NAMES.indexOf(parts[2].toLowerCase()) + 1 || 1;
+    const yr = parseInt(parts[3], 10) || y;
+    return yr * 10000 + mon * 100 + day;
   }
-  return VLOGS.filter((v) => (v.categories || []).includes(categoryKey));
+  if (parts && parts.length >= 1) return parseInt(parts[1], 10) * 10000 || y * 10000;
+  return y * 10000;
+}
+
+function getVlogsByCategory(categoryKey) {
+  let list;
+  if (categoryKey === 'vacation') {
+    list = VLOGS.filter((v) => (v.id || '').startsWith('vacation-') && !(v.categories || []).includes('citytrip'));
+  } else {
+    list = VLOGS.filter((v) => (v.categories || []).includes(categoryKey));
+  }
+  return [...list].sort((a, b) => vlogSortKey(b) - vlogSortKey(a));
 }
 
 function parseDurationToMinutes(duration) {
