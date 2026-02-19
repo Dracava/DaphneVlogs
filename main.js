@@ -86,6 +86,11 @@ function getCountryNameEn(code) {
   return COUNTRY_NAME_EN[c] || COUNTRY_NAME_EN[ADM0_A3_TO_ISO2[code?.toUpperCase()]] || '';
 }
 
+function getVlogCountryDisplay(vlog) {
+  if (vlog?.countryCodes?.length > 1 && vlog.countryName) return vlog.countryName;
+  return getCountryNameEn(vlog?.countryCode) || vlog?.countryName || '';
+}
+
 // VLOGS uit daphnevlogs_overzicht_v6.xlsx (Vacation_Vlogs + Mixed_Media)
 // VLOGS uit daphnevlogs_overzicht_v6.xlsx
 // VLOGS uit daphnevlogs_overzicht_v6.xlsx
@@ -377,6 +382,20 @@ const VLOGS = [
     isPopular: false,
     isFavorite: false,
     description: 'Easter vacation with my mother and brother to warm and lovely Budapest, Hungary.'
+  },
+  {
+    id: 'vacation-2024-poland-ukraine-9',
+    title: 'Poland & Ukraine',
+    countryCode: 'pl',
+    countryCodes: ['pl', 'ua'],
+    countryName: 'Poland & Ukraine',
+    dateRange: '',
+    duration: '32:57',
+    url: 'https://youtu.be/pSojy2YX64M?si=rQcb5lF7ZYfzkKP0',
+    year: 2024,
+    isPopular: false,
+    isFavorite: false,
+    description: ''
   },
   {
     id: 'vacation-2024-camping-bulgaria-8',
@@ -1235,7 +1254,12 @@ let countriesWithVlogs = null;
 
 function getCountriesWithVlogs() {
   if (countriesWithVlogs) return countriesWithVlogs;
-  countriesWithVlogs = new Set(VLOGS.map(v => v.countryCode?.toLowerCase()).filter(Boolean));
+  const codes = new Set();
+  VLOGS.forEach((v) => {
+    const list = v.countryCodes || (v.countryCode ? [v.countryCode] : []);
+    list.forEach((c) => { if (c) codes.add(String(c).toLowerCase()); });
+  });
+  countriesWithVlogs = codes;
   return countriesWithVlogs;
 }
 
@@ -1488,10 +1512,10 @@ function openInfoModal(vlog) {
   const descriptionEl = infoModal.querySelector('#info-description');
   
   if (titleEl) titleEl.textContent = vlog.title;
-  if (subtitleEl) subtitleEl.textContent = `${getCountryNameEn(vlog.countryCode) || vlog.countryName || ''}${vlog.dateRange ? ` · ${vlog.dateRange}` : ''}`;
+  if (subtitleEl) subtitleEl.textContent = `${getVlogCountryDisplay(vlog)}${vlog.dateRange ? ` · ${vlog.dateRange}` : ''}`;
   if (durationEl) durationEl.textContent = formatDurationToHms(vlog.duration) || '—';
   if (yearEl) yearEl.textContent = vlog.year || '—';
-  if (countryEl) countryEl.textContent = getCountryNameEn(vlog.countryCode) || vlog.countryName || '—';
+  if (countryEl) countryEl.textContent = getVlogCountryDisplay(vlog) || '—';
   if (descriptionEl) {
     descriptionEl.textContent = vlog.description || '';
     descriptionEl.style.display = vlog.description ? '' : 'none';
@@ -1583,6 +1607,8 @@ const COUNTRY_SEARCH_TERMS = {
   hu: 'hungary',
   id: 'indonesia',
   sg: 'singapore',
+  pl: 'poland polen',
+  ua: 'ukraine oekraine oekraïne',
 };
 
 function filterVlogsBySearch(vlogs, { query, years, minDur, maxDur }) {
@@ -1590,9 +1616,10 @@ function filterVlogsBySearch(vlogs, { query, years, minDur, maxDur }) {
     const q = (query || '').trim().toLowerCase();
     if (q) {
       const title = (v.title || '').toLowerCase();
-      const countryEn = (getCountryNameEn(v.countryCode) || '').toLowerCase();
+      const codes = v.countryCodes || (v.countryCode ? [v.countryCode] : []);
+      const countryEn = codes.map((c) => getCountryNameEn(c)).join(' ').toLowerCase();
       const countryNl = (v.countryName || '').toLowerCase();
-      const extras = (COUNTRY_SEARCH_TERMS[(v.countryCode || '').toLowerCase()] || '').toLowerCase();
+      const extras = codes.map((c) => COUNTRY_SEARCH_TERMS[(c || '').toLowerCase()] || '').join(' ').toLowerCase();
       const searchable = `${title} ${countryEn} ${countryNl} ${extras}`.trim();
       if (!searchable.includes(q)) return false;
     }
@@ -1774,7 +1801,7 @@ function renderFeaturedHero() {
   const thumb = youtubeThumbUrl(vlog);
   if (thumb) bg.style.backgroundImage = `url(${thumb})`;
   titleEl.textContent = vlog.title.toUpperCase();
-  metaEl.textContent = `${getCountryNameEn(vlog.countryCode) || vlog.countryName} · ${vlog.year}`;
+  metaEl.textContent = `${getVlogCountryDisplay(vlog)} · ${vlog.year}`;
 
   if (playBtn) {
     playBtn.onclick = () => vlog.url && openPlayer(vlog);
@@ -1837,7 +1864,11 @@ function renderCountryVlogs(countryCode, countryNameFallback) {
   const listEl = document.getElementById('country-vlog-list');
   if (!nameEl || !countEl || !listEl) return;
 
-  const countryVlogs = VLOGS.filter((v) => (v.countryCode || '').toLowerCase() === (countryCode || '').toLowerCase());
+  const cc = (countryCode || '').toLowerCase();
+  const countryVlogs = VLOGS.filter((v) => {
+    const list = v.countryCodes || (v.countryCode ? [v.countryCode] : []);
+    return list.some((c) => (c || '').toLowerCase() === cc);
+  });
   const countryName = getCountryNameEn(countryCode) || countryVlogs[0]?.countryName || countryNameFallback || 'Unknown country';
 
   nameEl.textContent = countryName;
@@ -2040,7 +2071,7 @@ function initSearch() {
       const vid = youtubeVideoId(vlog);
       const hasDuration = vlog.duration && vlog.duration !== '—';
       const displayDuration = hasDuration ? formatDurationToHms(vlog.duration) : (vid ? youtubeDurationCache.get(vid) || '—' : '—');
-      const subText = `${getCountryNameEn(vlog.countryCode) || vlog.countryName || ''} · ${vlog.year} · ${displayDuration}`;
+      const subText = `${getVlogCountryDisplay(vlog)} · ${vlog.year} · ${displayDuration}`;
       item.innerHTML = `
         <div class="search-result-thumb" style="${thumbStyle}"></div>
         <div class="search-result-meta">
@@ -2065,7 +2096,7 @@ function initSearch() {
           if (!subEl) return;
           const dur = durations.get(vid);
           if (dur) {
-            const base = `${getCountryNameEn(vlog.countryCode) || vlog.countryName || ''} · ${vlog.year}`;
+            const base = `${getVlogCountryDisplay(vlog)} · ${vlog.year}`;
             subEl.textContent = `${base} · ${formatDurationToHms(dur) || dur}`;
           }
         });
