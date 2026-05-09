@@ -125,6 +125,20 @@ const VLOGS = [
     description: ''
   },
   {
+    id: 'vacation-2026-maastricht',
+    title: 'Maastricht',
+    countryCode: 'nl',
+    countryName: 'Nederland',
+    dateRange: '1 May 2026 - 3 May 2026',
+    duration: '—',
+    url: 'https://youtu.be/7rkx4wbYtuA',
+    year: 2026,
+    isPopular: false,
+    isFavorite: false,
+    categories: ['citytrip'],
+    description: 'Girls\' weekend in Maastricht with Jolijn.'
+  },
+  {
     id: 'mixed-2025-d1-h2-diner',
     title: 'D1 & H2 Diner',
     countryCode: 'nl',
@@ -157,7 +171,7 @@ const VLOGS = [
     countryCode: 'bg',
     countryName: 'Bulgarije',
     dateRange: '25 August 2025',
-    duration: '—',
+    duration: '2:21',
     url: 'https://youtu.be/qqzmVeDfn30',
     year: 2025,
     isPopular: false,

@@ -1324,3 +1324,118 @@ body {
     height: calc(100vh - 4rem);
   }
 }
+
+/* === Site password gate === */
+html.site-gate-pending .app {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.site-gate {
+  position: fixed;
+  inset: 0;
+  z-index: 10050;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  background:
+    radial-gradient(850px 480px at 25% 20%, rgba(236, 72, 153, 0.25), transparent 55%),
+    radial-gradient(700px 420px at 75% 30%, rgba(139, 92, 246, 0.22), transparent 50%),
+    rgba(5, 0, 20, 0.97);
+}
+
+.site-gate-panel {
+  width: min(420px, 100%);
+  padding: 1.75rem 1.5rem 1.5rem;
+  border-radius: 1rem;
+  background: rgba(24, 16, 48, 0.92);
+  border: 1px solid rgba(168, 85, 247, 0.35);
+  box-shadow:
+    0 0 0 1px rgba(0, 0, 0, 0.2),
+    0 20px 50px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.site-gate-logo {
+  border-radius: 14px;
+  object-fit: cover;
+}
+
+.site-gate-title {
+  margin: 1rem 0 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #fafafa;
+}
+
+.site-gate-intro {
+  margin: 0.5rem 0 1.25rem;
+  font-size: 0.93rem;
+  color: #a1a1aa;
+}
+
+.site-gate-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.35rem;
+}
+
+.site-gate-label {
+  text-align: left;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #d4d4d8;
+}
+
+.site-gate-input {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  border-radius: 0.55rem;
+  border: 1px solid rgba(113, 113, 122, 0.6);
+  background: rgba(9, 9, 15, 0.85);
+  color: #fafafa;
+  font: inherit;
+  font-size: 1rem;
+}
+
+.site-gate-input:focus {
+  outline: none;
+  border-color: rgba(168, 85, 247, 0.85);
+  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2);
+}
+
+.site-gate-error {
+  margin: 0.15rem 0 0;
+  min-height: 1.25rem;
+  font-size: 0.8rem;
+  color: #f87171;
+  text-align: left;
+}
+
+.site-gate-submit {
+  margin-top: 0.35rem;
+  padding: 0.7rem 1rem;
+  border: none;
+  border-radius: 0.55rem;
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  background: linear-gradient(135deg, #a855f7, #ec4899);
+  transition: filter 0.15s ease, transform 0.08s ease;
+}
+
+.site-gate-submit:hover {
+  filter: brightness(1.08);
+}
+
+.site-gate-submit:active {
+  transform: scale(0.99);
+}

@@ -9,6 +9,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    (function () {
+      try {
+        if (sessionStorage.getItem('daphnevlogs_gate_ok') === '1') return;
+        document.documentElement.classList.add('site-gate-pending');
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body class="page-map">
   <div class="app">
@@ -109,6 +117,7 @@
     </div>
   </div>
 
+  <script src="site-gate.js"></script>
   <script type="module" src="main.js"></script>
 </body>
 </html>

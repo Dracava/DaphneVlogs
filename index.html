@@ -9,6 +9,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    (function () {
+      try {
+        if (sessionStorage.getItem('daphnevlogs_gate_ok') === '1') return;
+        document.documentElement.classList.add('site-gate-pending');
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body>
   <div class="app">
@@ -174,6 +182,7 @@
       document.body.insertAdjacentHTML('afterbegin', '<div style="position:fixed;top:0;left:0;right:0;z-index:100;background:#b91c1c;color:#fff;padding:0.75rem 1rem;text-align:center;font-size:0.9rem;">Open this site via a local server to see the vlogs: <code style="background:rgba(0,0,0,0.2);padding:0.2rem 0.4rem;border-radius:4px;">python3 -m http.server 8080</code> then go to <code style="background:rgba(0,0,0,0.2);padding:0.2rem 0.4rem;border-radius:4px;">http://localhost:8080</code></div>');
     }
   </script>
+  <script src="site-gate.js"></script>
   <script type="module" src="main.js"></script>
 </body>
 </html>
