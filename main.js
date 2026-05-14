@@ -709,7 +709,7 @@ const VLOGS = [
   },
   {
     id: 'mixed-2023-kingsday-17',
-    title: 'Kingsday',
+    title: 'Kingsday 2023',
     countryCode: 'nl',
     countryName: 'Nederland',
     dateRange: '27 April 2023',
