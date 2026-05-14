@@ -101,7 +101,7 @@ const VLOGS = [
     title: 'Winter 2026',
     countryCode: 'nl',
     countryName: 'Nederland',
-    dateRange: '2026',
+    dateRange: '7 January 2026',
     duration: '2:37',
     url: 'https://youtu.be/qV-UASn2PTI',
     year: 2026,
@@ -1947,7 +1947,12 @@ function renderCountryVlogs(countryCode, countryNameFallback) {
     return;
   }
 
-  const sorted = [...countryVlogs].sort((a, b) => b.year - a.year);
+  const sorted = [...countryVlogs].sort((a, b) => {
+    const kb = vlogSortKey(b);
+    const ka = vlogSortKey(a);
+    if (kb !== ka) return kb - ka;
+    return (b.year || 0) - (a.year || 0);
+  });
 
   sorted.forEach((vlog) => {
     const item = document.createElement('article');
