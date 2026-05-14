@@ -2348,8 +2348,8 @@ function initStreamPage() {
   initWorldSheet();
   if (document.getElementById('stream-hero')) {
     renderFeaturedHero();
-    renderMyList();
     renderRecentRow();
+    renderMyList();
     renderCategoryRow('stream-vacations', 'vacation');
     renderCategoryRow('stream-city-trips', 'citytrip');
     renderCategoryRow('stream-outings', 'outing');
