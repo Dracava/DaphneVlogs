@@ -1598,6 +1598,12 @@ function getSuggestedVlogs() {
   return shuffled.slice(0, 10);
 }
 
+function getRecentVlogs(limit = 10) {
+  const withUrl = VLOGS.filter((v) => v?.url && !(v.categories || []).includes('funeral'));
+  const sorted = [...withUrl].sort((a, b) => vlogSortKey(b) - vlogSortKey(a));
+  return sorted.slice(0, limit);
+}
+
 const MONTH_NAMES = ['january','february','march','april','may','june','july','august','september','october','november','december'];
 
 function vlogSortKey(v) {
@@ -1865,18 +1871,17 @@ function renderFeaturedHero() {
   }
 }
 
-function renderMyList() {
-  const container = document.getElementById('stream-mylist');
+function renderStreamPosterRow(containerId, vlogs) {
+  const container = document.getElementById(containerId);
   if (!container) return;
   container.innerHTML = '';
 
-  const suggested = getSuggestedVlogs();
-  if (suggested.length === 0) {
+  if (!vlogs.length) {
     container.innerHTML = '<p class="mylist-empty">No vlogs.</p>';
     return;
   }
 
-  suggested.forEach((vlog) => {
+  vlogs.forEach((vlog) => {
     const card = document.createElement('article');
     card.className = 'mylist-poster';
     const thumb = youtubeThumbUrl(vlog);
@@ -1904,6 +1909,14 @@ function renderMyList() {
     }
     container.appendChild(card);
   });
+}
+
+function renderMyList() {
+  renderStreamPosterRow('stream-mylist', getSuggestedVlogs());
+}
+
+function renderRecentRow() {
+  renderStreamPosterRow('stream-recent', getRecentVlogs());
 }
 
 function renderCountryVlogs(countryCode, countryNameFallback) {
@@ -2331,6 +2344,7 @@ function initStreamPage() {
   if (document.getElementById('stream-hero')) {
     renderFeaturedHero();
     renderMyList();
+    renderRecentRow();
     renderCategoryRow('stream-vacations', 'vacation');
     renderCategoryRow('stream-city-trips', 'citytrip');
     renderCategoryRow('stream-outings', 'outing');
