@@ -1598,12 +1598,6 @@ function getSuggestedVlogs() {
   return shuffled.slice(0, 10);
 }
 
-function getRecentVlogs(limit = 10) {
-  const withUrl = VLOGS.filter((v) => v?.url && !(v.categories || []).includes('funeral'));
-  const sorted = [...withUrl].sort((a, b) => vlogSortKey(b) - vlogSortKey(a));
-  return sorted.slice(0, limit);
-}
-
 const MONTH_NAMES = ['january','february','march','april','may','june','july','august','september','october','november','december'];
 
 function vlogSortKey(v) {
@@ -1619,6 +1613,17 @@ function vlogSortKey(v) {
   }
   if (parts && parts.length >= 1) return parseInt(parts[1], 10) * 10000 || y * 10000;
   return y * 10000;
+}
+
+function getRecentVlogs(limit = 10) {
+  const withUrl = VLOGS.filter((v) => v?.url && !(v.categories || []).includes('funeral'));
+  const sorted = [...withUrl].sort((a, b) => {
+    const kb = vlogSortKey(b);
+    const ka = vlogSortKey(a);
+    if (kb !== ka) return kb - ka;
+    return (b.year || 0) - (a.year || 0);
+  });
+  return sorted.slice(0, limit);
 }
 
 function getVlogsByCategory(categoryKey) {
