@@ -729,7 +729,7 @@ body {
 }
 
 .vlog-hover-title {
-  font-size: 0.95rem;
+  font-size: 1.06rem;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.9);
   line-height: 1.25;
@@ -762,7 +762,7 @@ body {
 }
 
 .vlog-title {
-  font-size: 0.95rem;
+  font-size: 1.06rem;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.9);
   line-height: 1.2;
