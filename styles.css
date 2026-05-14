@@ -686,11 +686,28 @@ body {
   }
 }
 
-/* Touch / grove pointer: geen schaal-hover; play-knop altijd bruikbaar; horizontaal scrollen prioriteit */
+/* Touch / grove pointer: geen schaal-hover; play-knop altijd bruikbaar; horizontaal scrollen soepeler */
 @media (hover: none), (pointer: coarse) {
   .stream-mylist-scroller,
   .stream-row-scroller {
-    touch-action: pan-x pinch-zoom;
+    /* pan-x alleen was te strikt voor schuine vegen; manipulation = pan + pinch zonder dubbeltik-wachttijd */
+    touch-action: manipulation;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    overscroll-behavior-y: auto;
+    /* mandatory snap blokkeert vaak kleine horizontale bewegingen op touch */
+    scroll-snap-type: x proximity;
+  }
+
+  .mylist-poster,
+  .stream-row-poster {
+    /* Zelfde touch-handling als scroller: horizontale intent gaat naar de rij */
+    touch-action: manipulation;
+  }
+
+  .vlog-thumb,
+  .vlog-meta-play {
+    touch-action: manipulation;
   }
 
   .mylist-poster .vlog-meta-play,
