@@ -2360,6 +2360,69 @@ function initWorldSheet() {
   document.addEventListener('touchcancel', onWorldSheetTouchEnd);
 }
 
+const HORIZONTAL_ROW_SCROLLER_SEL = '.stream-mylist-scroller, .stream-row-scroller';
+
+/** Op touch: horizontale veeg intent vastzetten zodat de pagina niet verticaal meescrollt. */
+function initHorizontalRowScroll() {
+  const isCoarsePointer = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+  if (!isCoarsePointer) return;
+
+  const MOVE_THRESHOLD = 4;
+
+  document.querySelectorAll(HORIZONTAL_ROW_SCROLLER_SEL).forEach((scroller) => {
+    let startX = 0;
+    let startY = 0;
+    let lastX = 0;
+    let axisLock = null; // 'x' | 'y' | null
+
+    function resetTouch() {
+      axisLock = null;
+    }
+
+    scroller.addEventListener(
+      'touchstart',
+      (e) => {
+        if (e.touches.length !== 1) return;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        lastX = startX;
+        axisLock = null;
+      },
+      { passive: true }
+    );
+
+    scroller.addEventListener(
+      'touchmove',
+      (e) => {
+        if (e.touches.length !== 1) return;
+        const x = e.touches[0].clientX;
+        const y = e.touches[0].clientY;
+        const dx = x - startX;
+        const dy = y - startY;
+        const adx = Math.abs(dx);
+        const ady = Math.abs(dy);
+
+        if (!axisLock) {
+          if (adx < MOVE_THRESHOLD && ady < MOVE_THRESHOLD) return;
+          // Bij gelijke beweging voorkeur voor horizontaal (gevoeliger voor rij-scroll)
+          if (adx >= ady) axisLock = 'x';
+          else axisLock = 'y';
+        }
+
+        if (axisLock === 'x') {
+          e.preventDefault();
+          scroller.scrollLeft -= x - lastX;
+          lastX = x;
+        }
+      },
+      { passive: false }
+    );
+
+    scroller.addEventListener('touchend', resetTouch, { passive: true });
+    scroller.addEventListener('touchcancel', resetTouch, { passive: true });
+  });
+}
+
 function initStreamPage() {
   initPlayerOverlay();
   initSearch();
@@ -2379,6 +2442,7 @@ function initStreamPage() {
     renderCategoryRow('stream-concerts', 'concert');
     renderCategoryRow('stream-projects', 'project');
     renderCategoryRow('stream-funerals', 'funeral');
+    initHorizontalRowScroll();
   }
   initGlobe().catch((err) => {
   console.error('Globe initialization failed:', err);
