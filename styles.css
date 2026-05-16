@@ -652,7 +652,7 @@ body {
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.42rem;
+  gap: 0.52rem;
   outline: none;
 }
 
