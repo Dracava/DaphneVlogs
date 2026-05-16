@@ -2376,9 +2376,9 @@ function initStreamPage() {
     renderCategoryRow('stream-home', 'home');
     renderCategoryRow('stream-graduations', 'graduation');
     renderCategoryRow('stream-sport', 'sport');
-    renderCategoryRow('stream-funerals', 'funeral');
     renderCategoryRow('stream-concerts', 'concert');
     renderCategoryRow('stream-projects', 'project');
+    renderCategoryRow('stream-funerals', 'funeral');
   }
   initGlobe().catch((err) => {
   console.error('Globe initialization failed:', err);
