@@ -125,6 +125,20 @@ const VLOGS = [
     description: ''
   },
   {
+    id: 'mixed-2026-curling',
+    title: 'Curling',
+    countryCode: 'nl',
+    countryName: 'Nederland',
+    dateRange: '28 March 2026',
+    duration: '2:33',
+    url: 'https://youtu.be/SmPwbz38yk4',
+    year: 2026,
+    isPopular: false,
+    isFavorite: false,
+    categories: ['event', 'outing'],
+    description: 'Family outing to go curling in the Netherlands.'
+  },
+  {
     id: 'mixed-2026-kingsday',
     title: 'Koningsdag 2026',
     countryCode: 'nl',
