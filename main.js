@@ -1602,8 +1602,7 @@ function selectCountryByCode(iso2) {
 }
 
 function getFeaturedVlog() {
-  const sorted = [...VLOGS].sort((a, b) => b.year - a.year);
-  return sorted[0] || null;
+  return getRecentVlogs(1)[0] || null;
 }
 
 function getSuggestedVlogs() {
