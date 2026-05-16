@@ -502,8 +502,8 @@ body {
 .stream-hero {
   position: relative;
   width: 100%;
-  min-height: 55vh;
-  max-height: 75vh;
+  min-height: 68vh;
+  max-height: 88vh;
   display: flex;
   align-items: flex-end;
   overflow: visible; /* laat hover-kaarten van Top 10 boven de rij uitsteken */
@@ -513,14 +513,21 @@ body {
   position: absolute;
   inset: 0;
   background-size: cover;
-  background-position: center;
+  /* Iets lager in beeld: thumbnail-titel in het midden valt minder over de UI-tekst */
+  background-position: center 42%;
   background-color: #0f172a;
 }
 
 .stream-hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.92) 0%, rgba(0, 0, 0, 0.4) 45%, transparent 70%);
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.96) 0%,
+    rgba(0, 0, 0, 0.88) 28%,
+    rgba(0, 0, 0, 0.45) 58%,
+    transparent 82%
+  );
 }
 
 .stream-hero-content {
@@ -528,23 +535,25 @@ body {
   z-index: 2;
   width: 100%;
   max-width: 56rem;
-  padding: 2.5rem 4% 2rem;
+  padding: 1.25rem 4% 2.25rem;
 }
 
 .stream-hero-title {
-  margin: 0 0 0.4em;
-  font-size: clamp(3.5rem, 8vw, 6rem);
+  margin: 0 0 0.2rem;
+  font-size: clamp(1.65rem, 4.2vw, 2.65rem);
   font-weight: 700;
   color: #fff;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  line-height: 1.1;
+  letter-spacing: 0.03em;
+  line-height: 1.15;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.65);
 }
 
 .stream-hero-meta {
-  margin: 0 0 1.5rem;
-  font-size: clamp(1.25rem, 2vw, 1.5rem);
-  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 1.15rem;
+  font-size: clamp(1rem, 1.8vw, 1.2rem);
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.55);
 }
 
 .stream-hero-actions {
@@ -566,6 +575,20 @@ body {
 
 .btn-stream-play:hover {
   background: rgba(139, 92, 246, 0.95);
+}
+
+@media (max-width: 767px) {
+  .stream-hero {
+    min-height: 72vh;
+  }
+
+  .stream-hero-content {
+    padding-bottom: 2.5rem;
+  }
+
+  .stream-hero-title {
+    font-size: clamp(1.5rem, 7vw, 2.1rem);
+  }
 }
 
 .btn-stream-random {
