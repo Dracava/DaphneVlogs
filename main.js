@@ -97,6 +97,20 @@ function getVlogCountryDisplay(vlog) {
 // VLOGS uit daphnevlogs_overzicht_v6.xlsx
 const VLOGS = [
   {
+    id: 'vacation-2026-giethoorn',
+    title: 'Giethoorn 2026',
+    countryCode: 'nl',
+    countryName: 'Nederland',
+    dateRange: '1 August 2026',
+    duration: '2:51',
+    url: 'https://youtu.be/0lyHWdb4giQ',
+    year: 2026,
+    isPopular: false,
+    isFavorite: false,
+    categories: ['citytrip'],
+    description: 'A day trip to Giethoorn.'
+  },
+  {
     id: 'mixed-2026-winter',
     title: 'Winter 2026',
     countryCode: 'nl',
