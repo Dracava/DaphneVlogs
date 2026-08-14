@@ -111,6 +111,20 @@ const VLOGS = [
     description: 'Watching the eclipse with friends at Millers Beach in The Hague, where my brother works.'
   },
   {
+    id: 'mixed-2026-vlietland',
+    title: 'Vlietland',
+    countryCode: 'nl',
+    countryName: 'Nederland',
+    dateRange: '2 August 2026',
+    duration: '1:09',
+    url: 'https://youtu.be/c9sR0uFoGtc',
+    year: 2026,
+    isPopular: false,
+    isFavorite: false,
+    categories: ['event', 'outing'],
+    description: 'A Sunday afternoon swimming at lake Vlietland with a group of friends.'
+  },
+  {
     id: 'vacation-2026-giethoorn',
     title: 'Giethoorn',
     countryCode: 'nl',
