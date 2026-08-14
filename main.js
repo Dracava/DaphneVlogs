@@ -112,7 +112,7 @@ const VLOGS = [
   },
   {
     id: 'vacation-2026-giethoorn',
-    title: 'Giethoorn 2026',
+    title: 'Giethoorn',
     countryCode: 'nl',
     countryName: 'Nederland',
     dateRange: '1 August 2026',
