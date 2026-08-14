@@ -97,6 +97,20 @@ function getVlogCountryDisplay(vlog) {
 // VLOGS uit daphnevlogs_overzicht_v6.xlsx
 const VLOGS = [
   {
+    id: 'mixed-2026-eclipse',
+    title: 'Eclipse 2026',
+    countryCode: 'nl',
+    countryName: 'Nederland',
+    dateRange: '12 August 2026',
+    duration: '1:50',
+    url: 'https://youtu.be/bVN8hSKwd2Q',
+    year: 2026,
+    isPopular: false,
+    isFavorite: false,
+    categories: ['event', 'outing'],
+    description: 'Watching the eclipse with friends at Millers Beach in The Hague, where my brother works.'
+  },
+  {
     id: 'vacation-2026-giethoorn',
     title: 'Giethoorn 2026',
     countryCode: 'nl',
