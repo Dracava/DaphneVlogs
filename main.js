@@ -97,6 +97,19 @@ function getVlogCountryDisplay(vlog) {
 // VLOGS uit daphnevlogs_overzicht_v6.xlsx
 const VLOGS = [
   {
+    id: 'vacation-2026-lessona',
+    title: 'Lessona',
+    countryCode: 'it',
+    countryName: 'Italië',
+    dateRange: '29 August 2026 - 5 September 2026',
+    duration: '19:17',
+    url: 'https://youtu.be/OKHgRzrvPO0',
+    year: 2026,
+    isPopular: false,
+    isFavorite: false,
+    description: 'Driving down to Northern Italy with my father and brothers, staying in Lessona, Piedmont — the region where my father was born (Varese).'
+  },
+  {
     id: 'mixed-2026-eclipse',
     title: 'Eclipse 2026',
     countryCode: 'nl',
