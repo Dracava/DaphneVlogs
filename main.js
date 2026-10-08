@@ -97,6 +97,19 @@ function getVlogCountryDisplay(vlog) {
 // VLOGS uit daphnevlogs_overzicht_v6.xlsx
 const VLOGS = [
   {
+    id: 'vacation-2026-lithuania',
+    title: 'Litouwen',
+    countryCode: 'lt',
+    countryName: 'Litouwen',
+    dateRange: '26 September 2026 - 2 October 2026',
+    duration: '22:52',
+    url: 'https://youtu.be/1Nbfeuif-xA',
+    year: 2026,
+    isPopular: false,
+    isFavorite: false,
+    description: 'ROAD TRIP! Delivering Karol\'s stuff from The Netherlands back to his spawn point while he is fighting a sickness. Will he survive or will the sickness take us all out? Watch to find out.'
+  },
+  {
     id: 'vacation-2026-lessona',
     title: 'Lessona',
     countryCode: 'it',
@@ -111,7 +124,7 @@ const VLOGS = [
   },
   {
     id: 'mixed-2026-eclipse',
-    title: 'Eclipse 2026',
+    title: 'Eclipse',
     countryCode: 'nl',
     countryName: 'Nederland',
     dateRange: '12 August 2026',
@@ -1736,6 +1749,7 @@ const COUNTRY_SEARCH_TERMS = {
   sg: 'singapore',
   pl: 'poland polen',
   ua: 'ukraine oekraine oekraïne',
+  lt: 'lithuania litouwen',
 };
 
 function filterVlogsBySearch(vlogs, { query, years, minDur, maxDur }) {
