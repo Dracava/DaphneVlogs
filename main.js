@@ -103,7 +103,7 @@ const VLOGS = [
     countryName: 'Litouwen',
     dateRange: '26 September 2026 - 2 October 2026',
     duration: '22:52',
-    url: 'https://youtu.be/1Nbfeuif-xA',
+    url: 'https://youtu.be/MNSuuhXncAk',
     year: 2026,
     isPopular: false,
     isFavorite: false,
