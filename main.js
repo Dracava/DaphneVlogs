@@ -98,9 +98,9 @@ function getVlogCountryDisplay(vlog) {
 const VLOGS = [
   {
     id: 'vacation-2026-lithuania',
-    title: 'Litouwen',
+    title: 'Lithuania',
     countryCode: 'lt',
-    countryName: 'Litouwen',
+    countryName: 'Lithuania',
     dateRange: '26 September 2026 - 2 October 2026',
     duration: '22:52',
     url: 'https://youtu.be/MNSuuhXncAk',
